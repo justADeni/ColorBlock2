@@ -1,0 +1,5 @@
+name: ColorBlock2
+version: '${project.version}'
+main: me.justadeni.colorblock2.ColorBlock2
+api-version: 1.18
+load: STARTUP
