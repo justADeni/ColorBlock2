@@ -6,18 +6,18 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
-class BlockClick : Listener{
+object BlockClick : Listener{
 
     @EventHandler
     fun onBlockClick(e : PlayerInteractEvent){
         if (e.action != Action.RIGHT_CLICK_BLOCK)
             return
 
-        val upcaseName = e.clickedBlock!!.type.name
+        val blockname = e.clickedBlock!!.type.name
 
         if (!e.hasItem())
             if (e.player.isSneaking)
-                if (Blocks.names().contains(upcaseName))
+                if (Blocks.names().contains(blockname))
 
         if (e.player.isSneaking)
             return

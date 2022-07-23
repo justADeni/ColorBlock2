@@ -1,4 +1,5 @@
 package me.justadeni.colorblock2.colorables
 
-class Terracotta {
+class Terracotta : Colorable() {
+    override val default = "WHITE_TERRACOTTA"
 }

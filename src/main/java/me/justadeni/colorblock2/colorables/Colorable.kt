@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack
 abstract class Colorable {
     abstract val default : String
 
-    fun paint(block : Block, dye : String, dropdye : Boolean){
+    open fun paint(block : Block, dye : String, dropdye : Boolean){
         val dyeSimple = dye.replace("_DYE", "") //for example "LIGHT_GRAY"
         val blockName = block.type.name //uppercase of full block name
 
@@ -25,7 +25,7 @@ abstract class Colorable {
             dropdye(block, oldDye)
     }
 
-    fun unpaint(block: Block, dropdye : Boolean){
+    open fun unpaint(block: Block, dropdye : Boolean){
         val blockName = block.type.name //uppercase of full block name
         val oldDye = Dyes.match(blockName) //
 
@@ -36,7 +36,7 @@ abstract class Colorable {
             dropdye(block, oldDye)
     }
 
-    fun dropdye(block: Block, dye: String){
+    open fun dropdye(block: Block, dye: String){
         val newDye = dye + "_DYE"
         val newDyeMat = getMaterial(newDye)!!
         val loc = block.location

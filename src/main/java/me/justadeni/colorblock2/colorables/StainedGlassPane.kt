@@ -1,4 +1,5 @@
 package me.justadeni.colorblock2.colorables
 
-class StainedGlassPane {
+class StainedGlassPane : Colorable() {
+    override val default = "GLASS_PANE"
 }
