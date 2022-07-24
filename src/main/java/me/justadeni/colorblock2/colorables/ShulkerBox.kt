@@ -32,4 +32,23 @@ class ShulkerBox : Colorable() {
         block.inventory.contents = inventory.contents
         block.state.update()
     }
+
+    override fun unpaint(block: Block, dropdye: Boolean) {
+        val inventory = (block as org.bukkit.block.ShulkerBox).snapshotInventory
+
+        val blockName = (block as Block).type.name //uppercase of full block name
+        if (blockName == default)
+            return
+
+        val oldDye = Dyes.match(blockName)
+
+        val newBlockMat = Material.getMaterial(default)!!
+        (block as Block).type = newBlockMat
+
+        if (dropdye)
+            dropdye(block, oldDye)
+
+        block.inventory.contents = inventory.contents
+        block.state.update()
+    }
 }
