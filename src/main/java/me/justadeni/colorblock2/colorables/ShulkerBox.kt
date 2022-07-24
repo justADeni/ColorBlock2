@@ -7,8 +7,10 @@ import org.bukkit.block.Block
 class ShulkerBox : Colorable() {
     override val default = "SHULKER_BOX"
 
-    override fun paint(block : Block, dye : String, dropdye : Boolean) {
-        val inventory = (block as org.bukkit.block.ShulkerBox).snapshotInventory
+    override fun paint(block: Block, dye: String, dropdye: Boolean) {
+        //this abomination had to be done
+        //because Kotlin "sMaRt cAsTs"
+        val inventory = (block as org.bukkit.block.ShulkerBox).snapshotInventory //here
 
         val dyeSimple = dye.replace("_DYE", "") //for example "LIGHT_GRAY"
         val blockName = (block as Block).type.name //uppercase of full block name
@@ -16,12 +18,12 @@ class ShulkerBox : Colorable() {
         val oldDye = Dyes.match(blockName) //dye a block used to have
         val newBlock = blockName.replace(oldDye, dyeSimple)
         val newBlockMat = Material.getMaterial(newBlock)!!
-        (block as Block).type = newBlockMat
+        (block as Block).type = newBlockMat                                     //and here
 
         if (dropdye)
             dropdye(block, oldDye)
 
-        //TODO: rest of inventory shenanigans
-        //henloooo :D u cute, sending kithes <3
-
+        block.inventory.contents = inventory.contents
+        block.state.update()
+    }
 }
