@@ -19,7 +19,7 @@ enum class Blocks {
             var list = arrayListOf<String>()
             for (name in Blocks.values())
                 list.add(name.name)
-            return names()
+            return list
         }
 
         fun match(bloc : String) : String{

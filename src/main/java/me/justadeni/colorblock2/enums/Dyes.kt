@@ -24,7 +24,7 @@ enum class Dyes {
             var list = arrayListOf<String>()
             for (name in Dyes.values())
                 list.add(name.name)
-            return names()
+            return list
         }
 
         fun match(bloc : String) : String{
