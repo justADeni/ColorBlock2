@@ -27,7 +27,11 @@ abstract class Colorable {
 
     open fun unpaint(block: Block, dropdye : Boolean){
         val blockName = block.type.name //uppercase of full block name
-        val oldDye = Dyes.match(blockName) //
+
+        if (blockName == default)
+            return
+
+        val oldDye = Dyes.match(blockName)
 
         val newBlockMat = getMaterial(default)!!
         block.type = newBlockMat
@@ -36,7 +40,7 @@ abstract class Colorable {
             dropdye(block, oldDye)
     }
 
-    open fun dropdye(block: Block, dye: String){
+    fun dropdye(block: Block, dye: String){
         val newDye = dye + "_DYE"
         val newDyeMat = getMaterial(newDye)!!
         val loc = block.location
