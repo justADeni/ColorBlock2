@@ -23,8 +23,6 @@ object BlockClick : Listener{
         if (Blocks.match(blockname) == "")
             return
 
-        e.isCancelled = true //the point of no return
-
         val player = e.player
 
         val mainhand = player.inventory.itemInMainHand
@@ -40,6 +38,7 @@ object BlockClick : Listener{
             } else {
                 return
             }
+            e.isCancelled = true
             Uncolor(block, blockname, !iscreative)
         } else {
             val slot : Boolean = if (Dyes.match(mainhand.type.name) != ""){
@@ -56,6 +55,7 @@ object BlockClick : Listener{
             } else {
                 dye = offhand.type.name
             }
+            e.isCancelled = true
             Color(block, dye, blockname, player, slot, !iscreative, !iscreative)
 
         }
