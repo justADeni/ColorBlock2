@@ -23,6 +23,8 @@ object BlockClick : Listener{
         if (Blocks.match(blockname) == "")
             return
 
+        e.isCancelled = true //the point of no return
+
         val player = e.player
 
         val mainhand = player.inventory.itemInMainHand
