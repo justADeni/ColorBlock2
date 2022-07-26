@@ -9,24 +9,27 @@ import org.bukkit.inventory.ItemStack
 
 object Color {
 
-    fun Color(block : Block, dye : String, blockname : String, player : Player, slot : Boolean){
+    fun Color(block:Block, dye:String, blockname:String, player:Player,
+              slot:Boolean, itemsubtract: Boolean, dropdye: Boolean){
 
-        val dropDye = true
-        var subtract = false
+        var subtract = itemsubtract
 
         when (Blocks.match(blockname)){
-            "SHULKER_BOX" -> subtract = ShulkerBox().paint(block, dye, dropDye)
-            "BED" -> subtract = Bed().paint(block, dye, dropDye)
-            "CONCRETE_POWDER" -> subtract = ConcretePowder().paint(block, dye, dropDye)
-            "CONCRETE" -> subtract = Concrete().paint(block, dye, dropDye)
-            "GLAZED_TERRACOTTA" -> subtract = GlazedTerracotta().paint(block, dye, dropDye)
-            "TERRACOTTA" -> subtract = Terracotta().paint(block, dye, dropDye)
-            "CARPET" -> subtract = Carpet().paint(block, dye, dropDye)
-            "STAINED_GLASS_PANE" -> subtract = StainedGlassPane().paint(block, dye, dropDye)
-            "STAINED_GLASS" -> subtract = StainedGlass().paint(block, dye, dropDye)
-            "WOOL" -> subtract = Wool().paint(block, dye, dropDye)
-            "CANDLE" -> subtract = Candle().paint(block, dye, dropDye)
+            "SHULKER_BOX" -> subtract = ShulkerBox().paint(block, dye, dropdye)
+            "BED" -> subtract = Bed().paint(block, dye, dropdye)
+            "CONCRETE_POWDER" -> subtract = ConcretePowder().paint(block, dye, dropdye)
+            "CONCRETE" -> subtract = Concrete().paint(block, dye, dropdye)
+            "GLAZED_TERRACOTTA" -> subtract = GlazedTerracotta().paint(block, dye, dropdye)
+            "TERRACOTTA" -> subtract = Terracotta().paint(block, dye, dropdye)
+            "CARPET" -> subtract = Carpet().paint(block, dye, dropdye)
+            "STAINED_GLASS_PANE" -> subtract = StainedGlassPane().paint(block, dye, dropdye)
+            "STAINED_GLASS" -> subtract = StainedGlass().paint(block, dye, dropdye)
+            "WOOL" -> subtract = Wool().paint(block, dye, dropdye)
+            "CANDLE" -> subtract = Candle().paint(block, dye, dropdye)
         }
+
+        if (!itemsubtract)
+            return
 
         if (!subtract)
             return

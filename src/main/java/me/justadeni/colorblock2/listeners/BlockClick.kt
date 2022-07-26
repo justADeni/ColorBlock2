@@ -4,6 +4,7 @@ import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.enums.Dyes
 import me.justadeni.colorblock2.transformers.Color.Color
 import me.justadeni.colorblock2.transformers.Uncolor.Uncolor
+import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
@@ -26,6 +27,9 @@ object BlockClick : Listener{
 
         val mainhand = player.inventory.itemInMainHand
         val offhand = player.inventory.itemInOffHand
+
+        val iscreative : Boolean = player.gameMode == GameMode.CREATIVE
+
         if (player.isSneaking){
             val slot: Boolean = if (mainhand.type.isAir){
                 true
@@ -34,7 +38,7 @@ object BlockClick : Listener{
             } else {
                 return
             }
-            Uncolor(block, blockname)
+            Uncolor(block, blockname, !iscreative)
         } else {
             val slot : Boolean = if (Dyes.match(mainhand.type.name) != ""){
                 true
@@ -50,7 +54,7 @@ object BlockClick : Listener{
             } else {
                 dye = offhand.type.name
             }
-            Color(block, dye, blockname, player, slot)
+            Color(block, dye, blockname, player, slot, !iscreative, !iscreative)
 
         }
     }
