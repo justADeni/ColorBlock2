@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2
 
+import me.justadeni.colorblock2.command.Command
 import me.justadeni.colorblock2.listeners.BlockClick
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
@@ -16,6 +17,7 @@ class ColorBlock2 : JavaPlugin() {
     override fun onEnable() {
         instance = this
         server.pluginManager.registerEvents(BlockClick, this)
+        getCommand("colorblock")?.setExecutor(Command)
         Config.reload()
     }
 

@@ -6,14 +6,17 @@ import me.justadeni.colorblock2.misc.Msg
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
-class Command : CommandExecutor{
+object Command : CommandExecutor{
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (command.name != "colorblock")
             return true
-        if (!sender.hasPermission(Config.adminpermission)) {
-            sender.sendMessage(Config.permissionerror)
-            return true
+        if (sender is Player) {
+            if (!sender.hasPermission(Config.adminpermission)) {
+                sender.sendMessage(Config.permissionerror)
+                return true
+            }
         }
         if (args.isEmpty()) {
             sender.sendMessage(Config.wrongargserror)
