@@ -1,13 +1,18 @@
 package me.justadeni.colorblock2
 
+import me.justadeni.colorblock2.misc.Msg
+
 object Config {
 
     private val instance = ColorBlock2().getInstance()!!
 
     var droponcreative : Boolean = false
-    var useoncreative : Boolean = false
-    lateinit var usepermission : String
+    var useoncreative  : Boolean = false
+    lateinit var usepermission   : String
     lateinit var adminpermission : String
+    lateinit var configreloaded  : String
+    lateinit var permissionerror : String
+    lateinit var wrongargserror  : String
 
     fun save(){
         instance.saveConfig()
@@ -22,12 +27,15 @@ object Config {
         useoncreative = getBool("UseOnCreative")
         usepermission = getString("UsePermission")
         adminpermission = getString("AdminPermission")
+        configreloaded = getString("ConfigReloaded")
+        permissionerror = getString("PermissionError")
+        wrongargserror = getString("WrongArgsError")
     }
     private fun getBool(query : String) : Boolean {
         return instance.config.getBoolean(query)
     }
     private fun getString(query: String) : String {
-        return instance.config.getString(query)!!
+        return Msg.colorMsg(instance.config.getString(query)!!)
     }
 
 }

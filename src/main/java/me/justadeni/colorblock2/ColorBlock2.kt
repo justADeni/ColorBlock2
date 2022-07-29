@@ -22,10 +22,4 @@ class ColorBlock2 : JavaPlugin() {
     override fun onDisable() {
         instance = null
     }
-
-    companion object {
-        fun colorMsg(message : String) : String {
-            return ChatColor.translateAlternateColorCodes('&', message)
-        }
-    }
 }
