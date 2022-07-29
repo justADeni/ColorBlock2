@@ -2,6 +2,7 @@ package me.justadeni.colorblock2.listeners
 
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.justadeni.colorblock2.Config
 import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.enums.Dyes
 import me.justadeni.colorblock2.transformers.Color.Color
@@ -12,11 +13,14 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
-object BlockClick : Listener{
+object BlockClick : Listener {
 
     @EventHandler
     fun onBlockClick(e : PlayerInteractEvent) = runBlocking{
         launch {
+            if (!(e.player.hasPermission(Config.usepermission) || e.player.hasPermission(Config.adminpermission)))
+                return@launch
+
             if (e.action != Action.RIGHT_CLICK_BLOCK)
                 return@launch
 
@@ -31,7 +35,7 @@ object BlockClick : Listener{
             val mainhand = player.inventory.itemInMainHand
             val offhand = player.inventory.itemInOffHand
 
-            val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
+            var iscreative: Boolean = player.gameMode == GameMode.CREATIVE
 
             if (player.isSneaking) {
                 val slot: Boolean = if (mainhand.type.isAir) {
@@ -42,6 +46,9 @@ object BlockClick : Listener{
                     return@launch
                 }
                 e.isCancelled = true
+                if (iscreative)
+                    if (Config.droponcreative)
+                        iscreative = false
                 Uncolor(block, blockname, !iscreative)
             } else {
                 val slot: Boolean = if (Dyes.match(mainhand.type.name) != "") {
@@ -58,9 +65,13 @@ object BlockClick : Listener{
                     offhand.type.name
                 }
                 e.isCancelled = true
+                if (iscreative)
+                    if (Config.useoncreative)
+                        iscreative = false
                 Color(block, dye, blockname, player, slot, !iscreative, !iscreative)
 
             }
         }
     }
+
 }

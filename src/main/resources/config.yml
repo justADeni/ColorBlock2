@@ -1,0 +1,4 @@
+DropOnCreative: false
+UseOnCreative: false
+UsePermission: "colorblock2.use"
+AdminPermission: "colorblock2.admin"

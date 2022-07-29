@@ -16,6 +16,7 @@ class ColorBlock2 : JavaPlugin() {
     override fun onEnable() {
         instance = this
         server.pluginManager.registerEvents(BlockClick, this)
+        Config.reload()
     }
 
     override fun onDisable() {

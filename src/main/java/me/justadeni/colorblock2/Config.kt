@@ -4,17 +4,30 @@ object Config {
 
     private val instance = ColorBlock2().getInstance()!!
 
-    var droponcreative = get("DropOnCreative")
-    var useoncreative = get("UseOnCreative")
+    var droponcreative : Boolean = false
+    var useoncreative : Boolean = false
+    lateinit var usepermission : String
+    lateinit var adminpermission : String
 
-    private fun save(){
+    fun save(){
         instance.saveConfig()
     }
-    private fun reload(){
+    fun reload(){
         instance.reloadConfig()
+        assign()
     }
-    private fun get(query : String) : Boolean {
+
+    private fun assign(){
+        droponcreative = getBool("DropOnCreative")
+        useoncreative = getBool("UseOnCreative")
+        usepermission = getString("UsePermission")
+        adminpermission = getString("AdminPermission")
+    }
+    private fun getBool(query : String) : Boolean {
         return instance.config.getBoolean(query)
+    }
+    private fun getString(query: String) : String {
+        return instance.config.getString(query)!!
     }
 
 }
