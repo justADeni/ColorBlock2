@@ -1,8 +1,6 @@
 package me.justadeni.colorblock2.listeners
 
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import me.justadeni.colorblock2.Config
+import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.enums.Dyes
 import me.justadeni.colorblock2.transformers.Color.Color
@@ -16,19 +14,23 @@ import org.bukkit.event.player.PlayerInteractEvent
 object BlockClick : Listener {
 
     @EventHandler
-    fun onBlockClick(e : PlayerInteractEvent) = runBlocking{
-        launch {
-            if (!(e.player.hasPermission(Config.usepermission) || e.player.hasPermission(Config.adminpermission)))
-                return@launch
+    fun onBlockClick(e : PlayerInteractEvent)/* = runBlocking*/{
+        /*launch {*/
+            if (!(e.player.hasPermission(ColorBlock2.confik.usepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)))
+                //return@launch
+                //cancel()
+                return
 
             if (e.action != Action.RIGHT_CLICK_BLOCK)
-                return@launch
+                //cancel()
+                return
 
             val block = e.clickedBlock!!
             val blockname = block.type.name
 
             if (Blocks.match(blockname) == "")
-                return@launch
+                //cancel()
+                return
 
             val player = e.player
 
@@ -43,20 +45,20 @@ object BlockClick : Listener {
                 } else if (offhand.type.isAir) {
                     false
                 } else {
-                    return@launch
+                    return
                 }
                 e.isCancelled = true
                 if (iscreative)
-                    if (Config.droponcreative)
+                    if (ColorBlock2.confik.droponcreative)
                         iscreative = false
                 Uncolor(block, blockname, !iscreative)
             } else {
-                val slot: Boolean = if (Dyes.match(mainhand.type.name) != "") {
+                val slot: Boolean = if ((mainhand.type.name).contains("DYE")) {
                     true
-                } else if (Dyes.match(offhand.type.name) != "") {
+                } else if ((offhand.type.name).contains("DYE")) {
                     false
                 } else {
-                    return@launch
+                    return
                 }
 
                 var dye: String = if (slot) {
@@ -66,12 +68,12 @@ object BlockClick : Listener {
                 }
                 e.isCancelled = true
                 if (iscreative)
-                    if (Config.useoncreative)
+                    if (ColorBlock2.confik.useoncreative)
                         iscreative = false
                 Color(block, dye, blockname, player, slot, !iscreative, !iscreative)
 
             }
-        }
+        /*}*/
     }
 
 }

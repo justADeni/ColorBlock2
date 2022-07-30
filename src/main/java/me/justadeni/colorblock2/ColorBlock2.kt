@@ -2,26 +2,23 @@ package me.justadeni.colorblock2
 
 import me.justadeni.colorblock2.command.Command
 import me.justadeni.colorblock2.listeners.BlockClick
-import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 
 class ColorBlock2 : JavaPlugin() {
 
-    private var instance : ColorBlock2? = null
-
-    fun getInstance() : ColorBlock2? {
-        return instance
+    companion object {
+        lateinit var confik: Config
     }
 
     override fun onEnable() {
-        instance = this
+        confik = Config(this)
+        saveDefaultConfig()
         server.pluginManager.registerEvents(BlockClick, this)
         getCommand("colorblock")?.setExecutor(Command)
-        Config.reload()
+        confik.assign()
     }
 
     override fun onDisable() {
-        instance = null
+
     }
 }

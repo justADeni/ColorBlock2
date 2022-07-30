@@ -1,8 +1,8 @@
 package me.justadeni.colorblock2.command
 
 import me.justadeni.colorblock2.ColorBlock2
-import me.justadeni.colorblock2.Config
 import me.justadeni.colorblock2.misc.Msg
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -13,25 +13,26 @@ object Command : CommandExecutor{
         if (command.name != "colorblock")
             return true
         if (sender is Player) {
-            if (!sender.hasPermission(Config.adminpermission)) {
-                sender.sendMessage(Config.permissionerror)
+            if (!sender.hasPermission(ColorBlock2.confik.adminpermission)) {
+                sender.sendMessage(ColorBlock2.confik.permissionerror)
                 return true
             }
         }
         if (args.isEmpty()) {
-            sender.sendMessage(Config.wrongargserror)
+            sender.sendMessage(Msg.color(ColorBlock2.confik.wrongargserror))
             return true
         }
         if (args.size == 1){
             if (args[0] != "reload") {
-                sender.sendMessage(Config.wrongargserror)
+                sender.sendMessage(ColorBlock2.confik.wrongargserror)
                 return true
             }
-            sender.sendMessage(Config.configreloaded)
-            Config.reload()
+            sender.sendMessage(ColorBlock2.confik.configreloaded)
+            ColorBlock2.confik.reload()
+            ColorBlock2.confik.assign()
             return true
         }
-        sender.sendMessage(Config.wrongargserror)
+        sender.sendMessage(ColorBlock2.confik.wrongargserror)
         return true
     }
 

@@ -2,9 +2,7 @@ package me.justadeni.colorblock2
 
 import me.justadeni.colorblock2.misc.Msg
 
-object Config {
-
-    private val instance = ColorBlock2().getInstance()!!
+class Config(private val plugin : ColorBlock2) {
 
     var droponcreative : Boolean = false
     var useoncreative  : Boolean = false
@@ -15,14 +13,13 @@ object Config {
     lateinit var wrongargserror  : String
 
     fun save(){
-        instance.saveConfig()
+        plugin.saveConfig()
     }
     fun reload(){
-        instance.reloadConfig()
-        assign()
+        plugin.reloadConfig()
     }
 
-    private fun assign(){
+    fun assign(){
         droponcreative = getBool("DropOnCreative")
         useoncreative = getBool("UseOnCreative")
         usepermission = getString("UsePermission")
@@ -32,10 +29,10 @@ object Config {
         wrongargserror = getString("WrongArgsError")
     }
     private fun getBool(query : String) : Boolean {
-        return instance.config.getBoolean(query)
+        return plugin.config.getBoolean(query)
     }
     private fun getString(query: String) : String {
-        return Msg.color(instance.config.getString(query)!!)
+        return plugin.config.getString(query)!!
     }
 
 }
