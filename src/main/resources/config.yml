@@ -2,6 +2,6 @@ DropOnCreative: false
 UseOnCreative: false
 UsePermission: "colorblock.use"
 AdminPermission: "colorblock.admin"
-ConfigReloaded: "Config reloaded"
-PermissionError: "Insufficient permissions"
-WrongArgsError: "Wrong or insufficient arguments"
+ConfigReloaded: "#3A9C20Config reloaded#31E900"
+PermissionError: "#AB4C37Insufficient permissions#FF0101"
+WrongArgsError: "#AB4C37Wrong or insufficient arguments#FF0101"

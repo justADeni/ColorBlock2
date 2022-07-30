@@ -35,7 +35,7 @@ object Config {
         return instance.config.getBoolean(query)
     }
     private fun getString(query: String) : String {
-        return Msg.colorMsg(instance.config.getString(query)!!)
+        return Msg.color(instance.config.getString(query)!!)
     }
 
 }
