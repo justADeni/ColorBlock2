@@ -13,25 +13,25 @@ object Command : CommandExecutor{
             return true
         if (sender is Player) {
             if (!sender.hasPermission(ColorBlock2.confik.adminpermission)) {
-                sender.sendMessage(ColorBlock2.confik.permissionerror.color())
+                sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.permissionerror.color())
                 return true
             }
         }
         if (args.isEmpty()) {
-            sender.sendMessage(ColorBlock2.confik.wrongargserror.color())
+            sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.wrongargserror.color())
             return true
         }
         if (args.size == 1){
             if (args[0] != "reload") {
-                sender.sendMessage(ColorBlock2.confik.wrongargserror.color())
+                sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.wrongargserror.color())
                 return true
             }
-            sender.sendMessage(ColorBlock2.confik.configreloaded.color())
+            sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.configreloaded.color())
             ColorBlock2.confik.reload()
             ColorBlock2.confik.assign()
             return true
         }
-        sender.sendMessage(ColorBlock2.confik.wrongargserror.color())
+        sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.wrongargserror.color())
         return true
     }
 

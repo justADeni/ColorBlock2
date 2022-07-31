@@ -1,7 +1,5 @@
 package me.justadeni.colorblock2
 
-import me.justadeni.colorblock2.misc.Msg
-
 class Config(private val plugin : ColorBlock2) {
 
     var droponcreative : Boolean = false
@@ -11,6 +9,7 @@ class Config(private val plugin : ColorBlock2) {
     lateinit var configreloaded  : String
     lateinit var permissionerror : String
     lateinit var wrongargserror  : String
+    lateinit var pluginprefix : String
 
     fun save(){
         plugin.saveConfig()
@@ -27,6 +26,7 @@ class Config(private val plugin : ColorBlock2) {
         configreloaded = getString("ConfigReloaded")
         permissionerror = getString("PermissionError")
         wrongargserror = getString("WrongArgsError")
+        pluginprefix = getString("PluginPrefix")
     }
     private fun getBool(query : String) : Boolean {
         return plugin.config.getBoolean(query)
