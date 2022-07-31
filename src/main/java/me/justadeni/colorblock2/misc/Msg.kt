@@ -4,7 +4,9 @@ import net.md_5.bungee.api.ChatColor
 
 object Msg {
 
-    fun color(message: String): String {
+    fun String.color(): String {
+
+        val message = this
 
         if (message.contains("#")) {
 
@@ -68,7 +70,7 @@ object Msg {
             'D' -> 13
             'E' -> 14
             'F' -> 15
-            else -> num.code
+            else -> num.digitToInt()
         }
     }
 
