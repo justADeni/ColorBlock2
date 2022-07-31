@@ -75,10 +75,10 @@ object Msg {
     }
 
     private fun checkBounds(num : Double) : Double {
-        return if (num > 254)
-            254.0
-        else if (num < 1)
-            1.0
+        return if (num > 255)
+            255.0
+        else if (num < 0)
+            0.0
         else
             num
     }
