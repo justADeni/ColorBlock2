@@ -1,5 +1,8 @@
 package me.justadeni.colorblock2.listeners
 
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.enums.Dyes
@@ -14,23 +17,20 @@ import org.bukkit.event.player.PlayerInteractEvent
 object BlockClick : Listener {
 
     @EventHandler
-    fun onBlockClick(e : PlayerInteractEvent)/* = runBlocking*/{
-        /*launch {*/
+    suspend fun onBlockClick(e : PlayerInteractEvent) = coroutineScope{
+        launch {
             if (!(e.player.hasPermission(ColorBlock2.confik.usepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)))
                 //return@launch
-                //cancel()
-                return
+                cancel()
 
             if (e.action != Action.RIGHT_CLICK_BLOCK)
-                //cancel()
-                return
+                cancel()
 
             val block = e.clickedBlock!!
             val blockname = block.type.name
 
             if (Blocks.match(blockname) == "")
-                //cancel()
-                return
+                cancel()
 
             val player = e.player
 
@@ -45,7 +45,8 @@ object BlockClick : Listener {
                 } else if (offhand.type.isAir) {
                     false
                 } else {
-                    return
+                    cancel()
+                    false
                 }
                 e.isCancelled = true
                 if (iscreative)
@@ -58,7 +59,8 @@ object BlockClick : Listener {
                 } else if ((offhand.type.name).contains("DYE")) {
                     false
                 } else {
-                    return
+                    cancel()
+                    false
                 }
 
                 var dye: String = if (slot) {
@@ -73,7 +75,7 @@ object BlockClick : Listener {
                 Color(block, dye, blockname, player, slot, !iscreative, !iscreative)
 
             }
-        /*}*/
+        }
     }
 
 }
