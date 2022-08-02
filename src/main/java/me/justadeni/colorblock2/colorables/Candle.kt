@@ -21,18 +21,17 @@ class Candle : Colorable() {
         if (oldDye == dyeSimple)
             return false
 
-        lateinit var newBlockMat : Material
-
-        if (oldDye != "") {
+        val newBlockMat : Material = if (oldDye != "") {
             val newBlock = blockName.replace(oldDye, dyeSimple)
-            newBlockMat = Material.getMaterial(newBlock)!!
 
             if (dropdye)
                 dropdye(block, oldDye)
-        } else {
 
+            Material.getMaterial(newBlock)!!
+        } else {
             val newBlock = dyeSimple + "_" + default
-            newBlockMat = Material.getMaterial(newBlock)!!
+
+            Material.getMaterial(newBlock)!!
         }
 
         val newCandle: Candle =
