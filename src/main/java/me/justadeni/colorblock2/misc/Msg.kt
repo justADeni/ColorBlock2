@@ -11,9 +11,11 @@ object Msg {
         if (message.contains("#")) {
 
             val messages = message.split("#")
-            val startTag = messages[1].take(6)
-            val endTag = messages[2].take(6)
+            var startTag = messages[1].take(6)
+            var endTag = messages[2].take(6)
             val newmessage = message.replace("#$startTag", "").replace("#$endTag", "")
+            startTag = startTag.uppercase()
+            endTag = endTag.uppercase()
 
             val r1 = hexToRgb(startTag.substring(0, 2)) //171
             val g1 = hexToRgb(startTag.substring(2, 4)) //76
