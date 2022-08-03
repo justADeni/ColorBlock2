@@ -38,7 +38,7 @@ object BlockClick : Listener {
                 val mainhand = player.inventory.itemInMainHand
                 val offhand = player.inventory.itemInOffHand
 
-                var iscreative: Boolean = player.gameMode == GameMode.CREATIVE
+                val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
 
                 if (player.isSneaking) {
                     val slot: Boolean = if (mainhand.type.isAir) {
@@ -49,11 +49,16 @@ object BlockClick : Listener {
                         cancel()
                         false
                     }
+
                     e.isCancelled = true
-                    if (iscreative)
-                        if (ColorBlock2.confik.droponcreative)
-                            iscreative = false
-                    Uncolor(block, blockname, player, !iscreative)
+
+                    val droponcreative : Boolean = if (iscreative){
+                        ColorBlock2.confik.droponcreative
+                    } else {
+                        true
+                    }
+
+                    Uncolor(block, blockname, player, droponcreative)
                 } else {
                     val slot: Boolean = if ((mainhand.type.name).contains("DYE")) {
                         true
@@ -69,11 +74,23 @@ object BlockClick : Listener {
                     } else {
                         offhand.type.name
                     }
+
                     e.isCancelled = true
-                    if (iscreative)
-                        if (ColorBlock2.confik.useoncreative)
-                            iscreative = false
-                    Color(block, dye, blockname, player, slot, !iscreative, !iscreative)
+
+                    val useoncreative : Boolean = if (iscreative){
+                        ColorBlock2.confik.useoncreative
+                    } else {
+                        true
+                    }
+
+                    val droponcreative : Boolean = if (iscreative){
+                        ColorBlock2.confik.droponcreative
+                    } else {
+                        true
+                    }
+
+
+                    Color(block, dye, blockname, player, slot, useoncreative, droponcreative)
 
                 }
             }
