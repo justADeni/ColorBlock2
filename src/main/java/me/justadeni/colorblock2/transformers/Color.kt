@@ -1,7 +1,9 @@
 package me.justadeni.colorblock2.transformers
 
+import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
+import me.justadeni.colorblock2.misc.Sound
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -28,12 +30,13 @@ object Color {
             "CANDLE" -> subtract = Candle().paint(block, dye, dropdye)
         }
 
+        Sound.ColorSound(player)
+
         if (!itemsubtract)
             return
 
         if (!subtract)
             return
-
 
         if (slot){
             val itemstacc = player.inventory.itemInMainHand

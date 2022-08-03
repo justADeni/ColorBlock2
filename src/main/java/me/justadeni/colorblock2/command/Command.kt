@@ -11,6 +11,7 @@ object Command : CommandExecutor{
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (command.name != "colorblock")
             return true
+
         if (sender is Player) {
             if (!sender.hasPermission(ColorBlock2.confik.adminpermission)) {
                 sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.permissionerror.color())

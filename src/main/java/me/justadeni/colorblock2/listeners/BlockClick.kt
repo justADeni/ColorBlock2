@@ -53,7 +53,7 @@ object BlockClick : Listener {
                     if (iscreative)
                         if (ColorBlock2.confik.droponcreative)
                             iscreative = false
-                    Uncolor(block, blockname, !iscreative)
+                    Uncolor(block, blockname, player, !iscreative)
                 } else {
                     val slot: Boolean = if ((mainhand.type.name).contains("DYE")) {
                         true

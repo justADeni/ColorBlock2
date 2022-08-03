@@ -7,6 +7,8 @@ PermissionError: "#AB4C37Insufficient permissions#FF0101"
 WrongArgsError: "#AB4C37Wrong or insufficient arguments#FF0101"
 PluginPrefix: "#D80F52[ColorBlock2] #30D3F3"
 ColorSound: "BLOCK_CALCITE_BREAK"
+ColorVolume: 5.0
 UncolorSound: "BLOCK_SOUL_SAND_BREAK"
-ColorParticle: ""
-UncolorParticle: ""
+UncolorVolume: 5.0
+ColorParticle: "FIREWORKS_SPARK"
+UncolorParticle: "DRIP_WATER"

@@ -2,11 +2,13 @@ package me.justadeni.colorblock2.transformers
 
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
+import me.justadeni.colorblock2.misc.Sound
 import org.bukkit.block.Block
+import org.bukkit.entity.Player
 
 object Uncolor {
 
-    fun Uncolor(block:Block, blockname:String, dropdye:Boolean){
+    fun Uncolor(block:Block, blockname:String, player : Player, dropdye:Boolean){
 
         when (Blocks.match(blockname)){
             "SHULKER_BOX" -> ShulkerBox().unpaint(block, dropdye)
@@ -21,6 +23,8 @@ object Uncolor {
             "WOOL" -> Wool().unpaint(block, dropdye)
             "CANDLE" -> Candle().unpaint(block, dropdye)
         }
+
+        Sound.UncolorSound(player)
     }
 
 }
