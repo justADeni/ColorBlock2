@@ -8,7 +8,9 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 object Command : CommandExecutor{
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+
         if (command.name != "colorblock")
             return true
 
@@ -22,7 +24,7 @@ object Command : CommandExecutor{
             sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.wrongargserror.color())
             return true
         }
-        if (args.size == 1){
+        if (args.size == 1) {
             if (args[0] != "reload") {
                 sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.wrongargserror.color())
                 return true
@@ -35,6 +37,5 @@ object Command : CommandExecutor{
         sender.sendMessage(ColorBlock2.confik.pluginprefix.color() + ColorBlock2.confik.wrongargserror.color())
         return true
     }
-
 
 }
