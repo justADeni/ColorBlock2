@@ -41,13 +41,8 @@ object BlockClick : Listener {
                 val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
 
                 if (player.isSneaking) {
-                    val slot: Boolean = if (mainhand.type.isAir) {
-                        true
-                    } else if (offhand.type.isAir) {
-                        false
-                    } else {
+                    if (!mainhand.type.isAir && !offhand.type.isAir){
                         cancel()
-                        false
                     }
 
                     e.isCancelled = true
