@@ -2,6 +2,7 @@ package me.justadeni.colorblock2.transformers
 
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
+import me.justadeni.colorblock2.misc.Particle
 import me.justadeni.colorblock2.misc.Sound
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
@@ -25,6 +26,7 @@ object Uncolor {
         }
 
         Sound.UncolorSound(player)
+        Particle.UncolorParticle(block)
     }
 
 }

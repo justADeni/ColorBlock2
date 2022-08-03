@@ -4,7 +4,7 @@ import net.md_5.bungee.api.ChatColor
 
 object Msg {
 
-    fun String.color(): String {
+    fun String.color(): String{
 
         val message = this
 
@@ -35,12 +35,18 @@ object Msg {
             var currentB = b1.toDouble() //55
             currentB = checkBounds(currentB)
 
-            val incrementR = ((r1-r2)/lenght).toDouble() //-2.7
-            val incrementG = ((g1-g2)/lenght).toDouble() //2.4
-            val incrementB = ((b1-b2)/lenght).toDouble() //1.7
+            val incrementR = ((r1 - r2) / lenght).toDouble() //-2.7
+            val incrementG = ((g1 - g2) / lenght).toDouble() //2.4
+            val incrementB = ((b1 - b2) / lenght).toDouble() //1.7
 
-            for (i in 0 until lenght.toInt()){
-                returnMessage += ChatColor.of(java.awt.Color(currentR.toInt(), currentG.toInt(), currentB.toInt()))
+            for (i in 0 until lenght.toInt()) {
+                returnMessage += ChatColor.of(
+                    java.awt.Color(
+                        currentR.toInt(),
+                        currentG.toInt(),
+                        currentB.toInt()
+                    )
+                )
                 returnMessage += newmessage[i]
 
                 currentR -= incrementR //255
@@ -58,6 +64,8 @@ object Msg {
         } else {
             return ChatColor.translateAlternateColorCodes('&', message)
         }
+
+
     }
 
     private fun hexToRgb(hex : String) : Int {

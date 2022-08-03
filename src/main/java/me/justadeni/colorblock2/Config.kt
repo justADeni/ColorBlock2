@@ -1,8 +1,5 @@
 package me.justadeni.colorblock2
 
-import org.bukkit.Particle
-import org.bukkit.Sound
-
 class Config(private val plugin : ColorBlock2) {
 
     var droponcreative : Boolean = false

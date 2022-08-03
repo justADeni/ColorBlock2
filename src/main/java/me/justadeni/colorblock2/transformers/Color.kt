@@ -1,8 +1,8 @@
 package me.justadeni.colorblock2.transformers
 
-import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
+import me.justadeni.colorblock2.misc.Particle
 import me.justadeni.colorblock2.misc.Sound
 import org.bukkit.Material
 import org.bukkit.block.Block
@@ -31,6 +31,7 @@ object Color {
         }
 
         Sound.ColorSound(player)
+        Particle.ColorParticle(block)
 
         if (!itemsubtract)
             return
