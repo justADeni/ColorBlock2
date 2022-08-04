@@ -1,12 +1,12 @@
 package me.justadeni.colorblock2.listeners
 
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.NonCancellable.cancel
 import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.transformers.Color.Color
 import me.justadeni.colorblock2.transformers.Uncolor.Uncolor
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -17,8 +17,12 @@ object BlockClick : Listener {
 
     @EventHandler
     suspend fun onBlockClick(e : PlayerInteractEvent) {
-        coroutineScope {
-            launch {
+
+        println(Bukkit.isPrimaryThread().toString())
+
+        //withContext(Dispatchers.IO){
+
+            println(Bukkit.isPrimaryThread().toString())
                 if (!(e.player.hasPermission(ColorBlock2.confik.usepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)))
                     cancel()
 
@@ -39,13 +43,13 @@ object BlockClick : Listener {
                 val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
 
                 if (player.isSneaking) {
-                    if (!mainhand.type.isAir && !offhand.type.isAir){
+                    if (!mainhand.type.isAir && !offhand.type.isAir) {
                         cancel()
                     }
 
                     e.isCancelled = true
 
-                    val droponcreative : Boolean = if (iscreative){
+                    val droponcreative: Boolean = if (iscreative) {
                         ColorBlock2.confik.droponcreative
                     } else {
                         true
@@ -70,13 +74,13 @@ object BlockClick : Listener {
 
                     e.isCancelled = true
 
-                    val useoncreative : Boolean = if (iscreative){
+                    val useoncreative: Boolean = if (iscreative) {
                         ColorBlock2.confik.useoncreative
                     } else {
                         true
                     }
 
-                    val droponcreative : Boolean = if (iscreative){
+                    val droponcreative: Boolean = if (iscreative) {
                         ColorBlock2.confik.droponcreative
                     } else {
                         true
@@ -87,7 +91,6 @@ object BlockClick : Listener {
 
                 }
             }
-        }
-    }
 
+   // }
 }
