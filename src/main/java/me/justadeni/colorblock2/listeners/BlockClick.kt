@@ -19,10 +19,12 @@ class BlockClick(private val plugin : ColorBlock2) : Listener {
     @EventHandler
     suspend fun onBlockClick(e : PlayerInteractEvent) {
 
+        println("Main thread?")
         println(Bukkit.isPrimaryThread().toString())
 
         plugin.launch {
 
+            println("Coroutine?")
             println(Bukkit.isPrimaryThread().toString())
 
                 if (!(e.player.hasPermission(ColorBlock2.confik.usepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)))
