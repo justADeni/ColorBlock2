@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2.listeners
 
+import com.github.shynixn.mccoroutine.bukkit.launch
 import kotlinx.coroutines.*
 import kotlinx.coroutines.NonCancellable.cancel
 import me.justadeni.colorblock2.ColorBlock2
@@ -13,16 +14,17 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
-object BlockClick : Listener {
+class BlockClick(private val plugin : ColorBlock2) : Listener {
 
     @EventHandler
     suspend fun onBlockClick(e : PlayerInteractEvent) {
 
         println(Bukkit.isPrimaryThread().toString())
 
-        //withContext(Dispatchers.IO){
+        plugin.launch {
 
             println(Bukkit.isPrimaryThread().toString())
+
                 if (!(e.player.hasPermission(ColorBlock2.confik.usepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)))
                     cancel()
 
@@ -92,5 +94,5 @@ object BlockClick : Listener {
                 }
             }
 
-   // }
+    }
 }
