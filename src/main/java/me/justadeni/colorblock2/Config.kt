@@ -25,10 +25,10 @@ class Config(private val plugin : ColorBlock2) {
     fun save(){
         plugin.saveConfig()
     }
-    fun reload(){
+    suspend fun reload(){
         plugin.reloadConfig()
     }
-    fun assign(){
+    suspend fun assign(){
         droponcreative = getBool("DropOnCreative")
         useoncreative = getBool("UseOnCreative")
 
@@ -49,13 +49,13 @@ class Config(private val plugin : ColorBlock2) {
         colorparticle = getString("ColorParticle")
         uncolorparticle = getString("UncolorParticle")
     }
-    private fun getBool(query : String) : Boolean {
+    private suspend fun getBool(query : String) : Boolean {
         return plugin.config.getBoolean(query)
     }
-    private fun getDouble(query: String) : Double {
+    private suspend fun getDouble(query: String) : Double {
         return plugin.config.getDouble(query)
     }
-    private fun getString(query: String) : String {
+    private suspend fun getString(query: String) : String {
         return plugin.config.getString(query)!!
     }
 

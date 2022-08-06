@@ -12,7 +12,7 @@ object Sound {
             return
 
         val volume : Float = ColorBlock2.confik.colorvolume.toFloat()
-        val sound : Sound = Sound.valueOf("Sound." + ColorBlock2.confik.colorsound.uppercase())
+        val sound : Sound = Sound.valueOf(ColorBlock2.confik.colorsound.uppercase())
         player.playSound(player.location, sound, volume,1.0f)
     }
 
@@ -22,7 +22,7 @@ object Sound {
             return
 
         val volume : Float = ColorBlock2.confik.uncolorvolume.toFloat()
-        val sound : Sound = Sound.valueOf("Sound." + ColorBlock2.confik.uncolorsound.uppercase())
+        val sound : Sound = Sound.valueOf(ColorBlock2.confik.uncolorsound.uppercase())
         player.playSound(player.location, sound, volume,1.0f)
     }
 }

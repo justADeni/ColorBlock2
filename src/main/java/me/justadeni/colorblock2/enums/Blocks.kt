@@ -1,5 +1,9 @@
 package me.justadeni.colorblock2.enums
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+
 enum class Blocks {
 
     SHULKER_BOX,
@@ -15,18 +19,25 @@ enum class Blocks {
     CANDLE;
 
     companion object {
-        fun names() : ArrayList<String>{
+        suspend fun names() : ArrayList<String>{
+
             var list = arrayListOf<String>()
             for (name in Blocks.values())
                 list.add(name.name)
             return list
         }
 
-        fun match(bloc : String) : String{
-            for (name in names())
-                if (bloc.contains(name))
-                    return name
-            return ""
+        suspend fun match(bloc : String) : String{
+            val match = coroutineScope {
+                async(Dispatchers.IO) {
+                    for (name in names())
+                        if (bloc.contains(name))
+                            return@async name
+
+                    return@async ""
+                }
+            }
+            return match.await()
         }
     }
 

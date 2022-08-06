@@ -9,7 +9,7 @@ import org.bukkit.block.data.type.Candle
 class Candle : Colorable() {
     override val default = "CANDLE"
 
-    override fun paint(block: Block, dye: String, dropdye: Boolean) : Boolean {
+    override suspend fun paint(block: Block, dye: String, dropdye: Boolean) : Boolean {
 
         val candle = block.blockData as Candle
 
@@ -44,7 +44,7 @@ class Candle : Colorable() {
         return true
     }
 
-    override fun unpaint(block: Block, dropdye: Boolean) {
+    override suspend fun unpaint(block: Block, dropdye: Boolean) {
         val candle = block.blockData as Candle
 
         val blockName = block.type.name

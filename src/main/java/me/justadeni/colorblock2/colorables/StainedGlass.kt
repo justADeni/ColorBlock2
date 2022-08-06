@@ -7,7 +7,7 @@ import org.bukkit.block.Block
 class StainedGlass : Colorable() {
     override val default = "GLASS"
 
-    override fun paint(block: Block, dye: String, dropdye: Boolean) : Boolean{
+    override suspend fun paint(block: Block, dye: String, dropdye: Boolean) : Boolean{
         val dyeSimple = dye.replace("_DYE", "") //for example "LIGHT_GRAY"
         val blockName = block.type.name //uppercase of full block name
 

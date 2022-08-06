@@ -8,7 +8,7 @@ import org.bukkit.block.ShulkerBox
 class ShulkerBox : Colorable() {
     override val default = "SHULKER_BOX"
 
-    override fun paint(block: Block, dye: String, dropdye: Boolean) : Boolean{
+    override suspend fun paint(block: Block, dye: String, dropdye: Boolean) : Boolean{
         val inventory = (block.state as ShulkerBox).snapshotInventory
 
         val dyeSimple = dye.replace("_DYE", "")
@@ -38,7 +38,7 @@ class ShulkerBox : Colorable() {
         return true
     }
 
-    override fun unpaint(block: Block, dropdye: Boolean) {
+    override suspend fun unpaint(block: Block, dropdye: Boolean) {
         val inventory = (block.state as ShulkerBox).snapshotInventory
 
         val blockName = block.type.name

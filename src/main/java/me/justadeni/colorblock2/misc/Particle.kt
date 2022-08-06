@@ -14,7 +14,7 @@ object Particle {
         if (ColorBlock2.confik.colorparticle.equals("NONE", ignoreCase = true))
             return
 
-        val particle: Particle = Particle.valueOf("Particle." + ColorBlock2.confik.colorparticle.uppercase())
+        val particle: Particle = Particle.valueOf(ColorBlock2.confik.colorparticle.uppercase())
 
         val loc1 = block.location
         val loclist = listOf(-1, 1)
@@ -39,7 +39,7 @@ object Particle {
         if (ColorBlock2.confik.uncolorparticle.equals("NONE", ignoreCase = true))
             return
 
-        val particle : Particle = Particle.valueOf("Particle." + ColorBlock2.confik.uncolorparticle.uppercase())
+        val particle : Particle = Particle.valueOf(ColorBlock2.confik.uncolorparticle.uppercase())
 
         val loc1 = block.location
         val loclist = listOf(-1,1)

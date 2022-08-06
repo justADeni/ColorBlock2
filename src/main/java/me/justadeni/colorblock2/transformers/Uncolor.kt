@@ -9,7 +9,9 @@ import org.bukkit.entity.Player
 
 object Uncolor {
 
-    fun Uncolor(block:Block, blockname:String, player : Player, dropdye:Boolean){
+    suspend fun Uncolor(block:Block, blockname:String, player : Player, dropdye:Boolean){
+
+        var sound = true
 
         when (Blocks.match(blockname)){
             "SHULKER_BOX" -> ShulkerBox().unpaint(block, dropdye)
@@ -23,10 +25,13 @@ object Uncolor {
             "STAINED_GLASS" -> StainedGlass().unpaint(block, dropdye)
             "WOOL" -> Wool().unpaint(block, dropdye)
             "CANDLE" -> Candle().unpaint(block, dropdye)
+            else -> sound = false
         }
 
-        Sound.UncolorSound(player)
-        Particle.UncolorParticle(block)
+        if (sound) {
+            Sound.UncolorSound(player)
+            Particle.UncolorParticle(block)
+        }
     }
 
 }

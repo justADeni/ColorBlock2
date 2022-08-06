@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2.transformers
 
+import kotlinx.coroutines.NonCancellable.cancel
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.misc.Particle
@@ -11,10 +12,12 @@ import org.bukkit.inventory.ItemStack
 
 object Color {
 
-    fun Color(block:Block, dye:String, blockname:String, player:Player,
+    suspend fun Color(block:Block, dye:String, blockname:String, player:Player,
               slot:Boolean, itemsubtract: Boolean, dropdye: Boolean){
 
         var subtract = itemsubtract
+
+        var sound = true
 
         when (Blocks.match(blockname)){
             "SHULKER_BOX" -> subtract = ShulkerBox().paint(block, dye, dropdye)
@@ -28,10 +31,13 @@ object Color {
             "STAINED_GLASS" -> subtract = StainedGlass().paint(block, dye, dropdye)
             "WOOL" -> subtract = Wool().paint(block, dye, dropdye)
             "CANDLE" -> subtract = Candle().paint(block, dye, dropdye)
+            else -> sound = false
         }
 
-        Sound.ColorSound(player)
-        Particle.ColorParticle(block)
+        if (sound){
+            Sound.ColorSound(player)
+            Particle.ColorParticle(block)
+        }
 
         if (!itemsubtract)
             return
