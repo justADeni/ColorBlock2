@@ -9,57 +9,31 @@ import org.bukkit.util.Vector
 
 object Particle {
 
-    fun ColorParticle(block : Block){
+    suspend fun Particle(type: String, block: Block) {
 
-        if (ColorBlock2.confik.colorparticle.equals("NONE", ignoreCase = true))
+        if (type.equals("NONE", ignoreCase = true))
             return
 
-        val particle: Particle = Particle.valueOf(ColorBlock2.confik.colorparticle.uppercase())
+        val particle: Particle = Particle.valueOf(type.uppercase())
 
         val loc1 = block.location
-        val loclist = listOf(-1, 1)
-        for (x in loclist) {
-            for (y in loclist) {
-                for (z in loclist) {
-                    val location = Location(
+        for (x in -1..1) {
+            for (y in -1..1) {
+                for (z in -1..1) {
+                    val loc2 = Location(
                         block.world,
-                        (block.x + x).toDouble(),
-                        (block.y + y).toDouble(),
-                        (block.z + z).toDouble()
+                        (block.x + 0.5 + x),
+                        (block.y + 0.5 + y),
+                        (block.z + 0.5 + z)
                     )
-                    drawLine(loc1, location, particle)
-                }
-            }
-        }
-
-
-    }
-
-    fun UncolorParticle(block : Block){
-        if (ColorBlock2.confik.uncolorparticle.equals("NONE", ignoreCase = true))
-            return
-
-        val particle : Particle = Particle.valueOf(ColorBlock2.confik.uncolorparticle.uppercase())
-
-        val loc1 = block.location
-        val loclist = listOf(-1,1)
-        for (x in loclist){
-            for (y in loclist){
-                for (z in loclist){
-                    val location = Location(
-                        block.world,
-                        (block.x + x).toDouble(),
-                        (block.y + y).toDouble(),
-                        (block.z + z).toDouble()
-                    )
-                    drawLine(loc1, location, particle)
+                    drawLine(loc1, loc2, particle)
                 }
             }
         }
     }
 
     //from https://bukkit.org/threads/making-a-particle-line-from-point-1-to-point-2.465415/
-    private fun drawLine(loc1: Location, loc2: Location, particle: Particle) {
+    private suspend fun drawLine(loc1: Location, loc2: Location, particle: Particle) {
         //point2.getWorld()?.let { Validate.isTrue(it.equals(world), "Lines cannot be in different worlds!") }
         val space = 0.1
         val distance: Double = loc1.distance(loc2)
@@ -73,4 +47,5 @@ object Particle {
             p1.add(vector)
         }
     }
+
 }

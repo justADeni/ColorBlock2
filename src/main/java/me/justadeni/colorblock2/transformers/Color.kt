@@ -1,6 +1,7 @@
 package me.justadeni.colorblock2.transformers
 
 import kotlinx.coroutines.NonCancellable.cancel
+import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.misc.Particle
@@ -35,8 +36,8 @@ object Color {
         }
 
         if (sound){
-            Sound.ColorSound(player)
-            Particle.ColorParticle(block)
+            Sound.Sound(ColorBlock2.confik.colorparticle, ColorBlock2.confik.colorvolume, player)
+            Particle.Particle(ColorBlock2.confik.colorparticle, block)
         }
 
         if (!itemsubtract)

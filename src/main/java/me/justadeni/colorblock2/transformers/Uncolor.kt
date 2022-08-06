@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2.transformers
 
+import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
 import me.justadeni.colorblock2.misc.Particle
@@ -29,8 +30,8 @@ object Uncolor {
         }
 
         if (sound) {
-            Sound.UncolorSound(player)
-            Particle.UncolorParticle(block)
+            Sound.Sound(ColorBlock2.confik.uncolorsound, ColorBlock2.confik.uncolorvolume, player)
+            Particle.Particle(ColorBlock2.confik.uncolorparticle, block)
         }
     }
 

@@ -6,23 +6,13 @@ import org.bukkit.entity.Player
 
 object Sound {
 
-    fun ColorSound(player : Player){
+    fun Sound(type : String, volume : Double, player : Player){
 
-        if (ColorBlock2.confik.colorsound.equals("NONE", ignoreCase = true))
+        if (type.equals("NONE", ignoreCase = true))
             return
 
-        val volume : Float = ColorBlock2.confik.colorvolume.toFloat()
-        val sound : Sound = Sound.valueOf(ColorBlock2.confik.colorsound.uppercase())
-        player.playSound(player.location, sound, volume,1.0f)
-    }
-
-    fun UncolorSound(player: Player){
-
-        if (ColorBlock2.confik.colorsound.equals("NONE", ignoreCase = true))
-            return
-
-        val volume : Float = ColorBlock2.confik.uncolorvolume.toFloat()
-        val sound : Sound = Sound.valueOf(ColorBlock2.confik.uncolorsound.uppercase())
-        player.playSound(player.location, sound, volume,1.0f)
+        val vol : Float = volume.toFloat()
+        val sound : Sound = Sound.valueOf(type.uppercase())
+        player.playSound(player.location, sound, vol,1.0f)
     }
 }
