@@ -45,7 +45,7 @@ class Candle : Colorable() {
             } as Candle
         block.blockData = newCandle
 
-        Sound.Sound(ColorBlock2.confik.colorparticle, ColorBlock2.confik.colorvolume, player)
+        Sound.Sound(ColorBlock2.confik.colorsound, ColorBlock2.confik.colorvolume, player)
         Particle.Particle(ColorBlock2.confik.colorparticle, block)
 
         return true
