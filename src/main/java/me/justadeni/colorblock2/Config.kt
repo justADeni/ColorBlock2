@@ -1,5 +1,9 @@
 package me.justadeni.colorblock2
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+
 class Config(private val plugin : ColorBlock2) {
 
     var droponcreative : Boolean = false
@@ -29,25 +33,29 @@ class Config(private val plugin : ColorBlock2) {
         plugin.reloadConfig()
     }
     suspend fun assign(){
-        droponcreative = getBool("DropOnCreative")
-        useoncreative = getBool("UseOnCreative")
+        coroutineScope {
+            async(Dispatchers.IO) {
+                droponcreative = getBool("DropOnCreative")
+                useoncreative = getBool("UseOnCreative")
 
-        usepermission = getString("UsePermission")
-        adminpermission = getString("AdminPermission")
+                usepermission = getString("UsePermission")
+                adminpermission = getString("AdminPermission")
 
-        configreloaded = getString("ConfigReloaded")
-        permissionerror = getString("PermissionError")
-        wrongargserror = getString("WrongArgsError")
-        pluginprefix = getString("PluginPrefix")
+                configreloaded = getString("ConfigReloaded")
+                permissionerror = getString("PermissionError")
+                wrongargserror = getString("WrongArgsError")
+                pluginprefix = getString("PluginPrefix")
 
-        colorsound = getString("ColorSound")
-        colorvolume = getDouble("ColorVolume")
+                colorsound = getString("ColorSound")
+                colorvolume = getDouble("ColorVolume")
 
-        uncolorsound = getString("UncolorSound")
-        uncolorvolume = getDouble("UncolorVolume")
+                uncolorsound = getString("UncolorSound")
+                uncolorvolume = getDouble("UncolorVolume")
 
-        colorparticle = getString("ColorParticle")
-        uncolorparticle = getString("UncolorParticle")
+                colorparticle = getString("ColorParticle")
+                uncolorparticle = getString("UncolorParticle")
+            }
+        }
     }
     private suspend fun getBool(query : String) : Boolean {
         return plugin.config.getBoolean(query)

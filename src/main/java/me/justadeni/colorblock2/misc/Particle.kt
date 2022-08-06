@@ -1,7 +1,10 @@
 package me.justadeni.colorblock2.misc
 
 import com.github.shynixn.mccoroutine.bukkit.ticks
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.block.Block
@@ -12,23 +15,28 @@ object Particle {
 
     suspend fun Particle(type: String, block: Block) {
 
-        if (type.equals("NONE", ignoreCase = true))
-            return
+        coroutineScope {
+            async {
 
-        val particle: Particle = Particle.valueOf(type.uppercase())
+                if (type.equals("NONE", ignoreCase = true))
+                    return@async
 
-        val loc1 = Location(block.world, block.x+0.5, block.y+0.5, block.z+0.5)
-        for (x in -1..1) {
-            for (y in -1..1) {
-                for (z in -1..1) {
-                    val loc2 = Location(
-                        block.world,
-                        (block.x + 0.5 + x),
-                        (block.y + 0.5 + y),
-                        (block.z + 0.5 + z)
-                    )
-                    drawLine(loc1, loc2, particle)
-                    delay(2.ticks)
+                val particle: Particle = Particle.valueOf(type.uppercase())
+
+                val loc1 = Location(block.world, block.x + 0.5, block.y + 0.5, block.z + 0.5)
+                for (x in -1..1) {
+                    for (y in -1..1) {
+                        for (z in -1..1) {
+                            val loc2 = Location(
+                                block.world,
+                                (block.x + 0.5 + x),
+                                (block.y + 0.5 + y),
+                                (block.z + 0.5 + z)
+                            )
+                            drawLine(loc1, loc2, particle)
+                            delay(2.ticks)
+                        }
+                    }
                 }
             }
         }
@@ -44,7 +52,11 @@ object Particle {
         val vector: Vector = p2.clone().subtract(p1).normalize().multiply(space)
         var length = 0.0
         while (length < distance) {
-            loc1.world?.spawnParticle(particle, p1.x, p1.y, p1.z, 1)
+            coroutineScope {
+                launch {
+                    loc1.world?.spawnParticle(particle, p1.x, p1.y, p1.z, 1)
+                }
+            }
             length += space
             p1.add(vector)
         }

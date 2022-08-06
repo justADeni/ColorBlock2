@@ -1,15 +1,19 @@
 package me.justadeni.colorblock2.colorables
 
+import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.enums.Dyes
+import me.justadeni.colorblock2.misc.Particle
+import me.justadeni.colorblock2.misc.Sound
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.type.Candle
+import org.bukkit.entity.Player
 
 class Candle : Colorable() {
     override val default = "CANDLE"
 
-    override suspend fun paint(block: Block, dye: String, dropdye: Boolean) : Boolean {
+    override suspend fun paint(block: Block, dye: String, dropdye: Boolean, player : Player) : Boolean {
 
         val candle = block.blockData as Candle
 
@@ -41,10 +45,13 @@ class Candle : Colorable() {
             } as Candle
         block.blockData = newCandle
 
+        Sound.Sound(ColorBlock2.confik.colorparticle, ColorBlock2.confik.colorvolume, player)
+        Particle.Particle(ColorBlock2.confik.colorparticle, block)
+
         return true
     }
 
-    override suspend fun unpaint(block: Block, dropdye: Boolean) {
+    override suspend fun unpaint(block: Block, dropdye: Boolean, player: Player) {
         val candle = block.blockData as Candle
 
         val blockName = block.type.name
@@ -65,5 +72,8 @@ class Candle : Colorable() {
                 (blockData as Candle).isLit = candle.isLit
             } as Candle
         block.blockData = newCandle
+
+        Sound.Sound(ColorBlock2.confik.uncolorsound, ColorBlock2.confik.uncolorvolume, player)
+        Particle.Particle(ColorBlock2.confik.uncolorparticle, block)
     }
 }
