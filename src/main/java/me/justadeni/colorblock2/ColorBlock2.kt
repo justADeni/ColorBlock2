@@ -7,7 +7,6 @@ import com.github.shynixn.mccoroutine.bukkit.setSuspendingTabCompleter
 import me.justadeni.colorblock2.command.Command
 import me.justadeni.colorblock2.command.TabComplete
 import me.justadeni.colorblock2.listeners.BlockClick
-import org.bukkit.plugin.java.JavaPlugin
 
 class ColorBlock2 : SuspendingJavaPlugin() {
 
@@ -18,7 +17,7 @@ class ColorBlock2 : SuspendingJavaPlugin() {
     override suspend fun onEnableAsync() {
         confik = Config(this)
         saveDefaultConfig()
-        server.pluginManager.registerSuspendingEvents(BlockClick(this), this)
+        server.pluginManager.registerSuspendingEvents(BlockClick(), this)
         getCommand("colorblock")?.setSuspendingExecutor(Command)
         getCommand("colorblock")?.setSuspendingTabCompleter(TabComplete)
         confik.assign()

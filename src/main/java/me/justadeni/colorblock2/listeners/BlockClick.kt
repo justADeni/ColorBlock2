@@ -1,25 +1,20 @@
 package me.justadeni.colorblock2.listeners
 
-import com.github.shynixn.mccoroutine.bukkit.launch
-import com.github.shynixn.mccoroutine.bukkit.ticks
-import kotlinx.coroutines.*
-import kotlinx.coroutines.NonCancellable.cancel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import me.justadeni.colorblock2.ColorBlock2
+import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
-import me.justadeni.colorblock2.transformers.Color.Color
-import me.justadeni.colorblock2.transformers.Uncolor.Uncolor
-import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import org.bukkit.block.Block
+import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.EquipmentSlot
-import org.bukkit.inventory.MainHand
-import java.util.UUID
+import org.bukkit.inventory.ItemStack
 
-class BlockClick(private val plugin : ColorBlock2) : Listener {
+class BlockClick : Listener {
 
     @EventHandler
     suspend fun onBlockClick(e : PlayerInteractEvent) {
@@ -63,7 +58,19 @@ class BlockClick(private val plugin : ColorBlock2) : Listener {
                 true
             }
 
-            Uncolor(block, blockname, player, droponcreative)
+            when (Blocks.match(blockname)){
+                "SHULKER_BOX" -> ShulkerBox().unpaint(block, droponcreative, player)
+                "BED" -> Bed().unpaint(block, droponcreative, player)
+                "CONCRETE_POWDER" -> ConcretePowder().unpaint(block, droponcreative, player)
+                "CONCRETE" -> Concrete().unpaint(block, droponcreative, player)
+                "GLAZED_TERRACOTTA" -> GlazedTerracotta().unpaint(block, droponcreative, player)
+                "TERRACOTTA" -> Terracotta().unpaint(block, droponcreative, player)
+                "CARPET" -> Carpet().unpaint(block, droponcreative, player)
+                "STAINED_GLASS_PANE" -> StainedGlassPane().unpaint(block, droponcreative, player)
+                "STAINED_GLASS" -> StainedGlass().unpaint(block, droponcreative, player)
+                "WOOL" -> Wool().unpaint(block, droponcreative, player)
+                "CANDLE" -> Candle().unpaint(block, droponcreative, player)
+            }
         } else {
             if (!(player.hasPermission(ColorBlock2.confik.dyepermission) || player.hasPermission(ColorBlock2.confik.adminpermission)))
                 return
@@ -87,8 +94,51 @@ class BlockClick(private val plugin : ColorBlock2) : Listener {
                 true
             }
 
+            var subtract = useoncreative
 
-            Color(block, dye, blockname, player, slot, useoncreative, droponcreative)
+            coroutineScope {
+
+                launch {
+
+                    when (Blocks.match(blockname)) {
+                        "SHULKER_BOX" -> subtract = ShulkerBox().paint(block, dye, droponcreative, player)
+                        "BED" -> subtract = Bed().paint(block, dye, droponcreative, player)
+                        "CONCRETE_POWDER" -> subtract = ConcretePowder().paint(block, dye, droponcreative, player)
+                        "CONCRETE" -> subtract = Concrete().paint(block, dye, droponcreative, player)
+                        "GLAZED_TERRACOTTA" -> subtract = GlazedTerracotta().paint(block, dye, droponcreative, player)
+                        "TERRACOTTA" -> subtract = Terracotta().paint(block, dye, droponcreative, player)
+                        "CARPET" -> subtract = Carpet().paint(block, dye, droponcreative, player)
+                        "STAINED_GLASS_PANE" -> subtract = StainedGlassPane().paint(block, dye, droponcreative, player)
+                        "STAINED_GLASS" -> subtract = StainedGlass().paint(block, dye, droponcreative, player)
+                        "WOOL" -> subtract = Wool().paint(block, dye, droponcreative, player)
+                        "CANDLE" -> subtract = Candle().paint(block, dye, droponcreative, player)
+                    }
+                }
+
+                launch {
+                    if (!useoncreative)
+                        return@launch
+
+                    if (!subtract)
+                        return@launch
+
+                    if (slot) {
+                        val itemstacc = player.inventory.itemInMainHand
+                        if (itemstacc.amount > 1) {
+                            player.inventory.setItemInMainHand(ItemStack(itemstacc.type, itemstacc.amount - 1))
+                        } else {
+                            player.inventory.setItemInMainHand(ItemStack(Material.AIR))
+                        }
+                    } else {
+                        val itemstacc = player.inventory.itemInOffHand
+                        if (itemstacc.amount > 1) {
+                            player.inventory.setItemInOffHand(ItemStack(itemstacc.type, itemstacc.amount - 1))
+                        } else {
+                            player.inventory.setItemInOffHand(ItemStack(Material.AIR))
+                        }
+                    }
+                }
+            }
         }
 
     }
