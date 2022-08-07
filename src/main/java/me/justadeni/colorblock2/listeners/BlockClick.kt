@@ -23,9 +23,6 @@ class BlockClick(private val plugin : ColorBlock2) : Listener {
 
     @EventHandler
     suspend fun onBlockClick(e : PlayerInteractEvent) {
-        if (!(e.player.hasPermission(ColorBlock2.confik.usepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)))
-            return
-
         if (e.action != Action.RIGHT_CLICK_BLOCK)
             return
 
@@ -51,6 +48,9 @@ class BlockClick(private val plugin : ColorBlock2) : Listener {
         val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
 
         if (player.isSneaking) {
+            if (!(player.hasPermission(ColorBlock2.confik.undyepermission) || player.hasPermission(ColorBlock2.confik.adminpermission)))
+                return
+
             if (!hand.type.isAir) {
                 return
             }
@@ -65,6 +65,9 @@ class BlockClick(private val plugin : ColorBlock2) : Listener {
 
             Uncolor(block, blockname, player, droponcreative)
         } else {
+            if (!(player.hasPermission(ColorBlock2.confik.dyepermission) || player.hasPermission(ColorBlock2.confik.adminpermission)))
+                return
+
             if (!hand.type.name.contains("DYE"))
                 return
 

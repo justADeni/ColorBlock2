@@ -1,7 +1,8 @@
 DropOnCreative: false
 UseOnCreative: false
 
-UsePermission: "colorblock.use"
+DyePermission: "colorblock.dye"
+UndyePermission: "colorblock.undye"
 AdminPermission: "colorblock.admin"
 
 ConfigReloaded: "#3A9C20Config reloaded#31E900"

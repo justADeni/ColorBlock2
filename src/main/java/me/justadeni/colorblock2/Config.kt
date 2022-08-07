@@ -12,7 +12,8 @@ class Config(private val plugin : ColorBlock2) {
     var droponcreative : Boolean = false
     var useoncreative  : Boolean = false
 
-    lateinit var usepermission   : String
+    lateinit var dyepermission   : String
+    lateinit var undyepermission : String
     lateinit var adminpermission : String
 
     lateinit var configreloaded  : String
@@ -41,7 +42,8 @@ class Config(private val plugin : ColorBlock2) {
                 droponcreative = getBool("DropOnCreative")
                 useoncreative = getBool("UseOnCreative")
 
-                usepermission = getString("UsePermission")
+                dyepermission = getString("DyePermission")
+                undyepermission = getString("UndyePermission")
                 adminpermission = getString("AdminPermission")
 
                 configreloaded = getString("ConfigReloaded")
@@ -51,26 +53,26 @@ class Config(private val plugin : ColorBlock2) {
 
                 colorsound = getString("ColorSound")
                 if (!existsSound(colorsound)){
-                    printErr("ColorSound value $colorsound is not a valid sound. Setting to NONE")
+                    printErr("#21DB0BColorSound value $colorsound is not a valid sound. Setting to NONE#DA0808")
                     colorsound = "NONE"
                 }
                 colorvolume = getDouble("ColorVolume")
 
                 uncolorsound = getString("UncolorSound")
                 if (!existsSound(uncolorsound)){
-                    printErr("UncolorSound value $uncolorsound is not a valid sound. Setting to NONE.")
+                    printErr("#21DB0BUncolorSound value $uncolorsound is not a valid sound. Setting to NONE.#DA0808")
                     uncolorsound = "NONE"
                 }
                 uncolorvolume = getDouble("UncolorVolume")
 
                 colorparticle = getString("ColorParticle")
                 if (!existsParticle(colorparticle)){
-                    printErr("ColorParticle value $colorparticle is not a valid particle. Setting to NONE.")
+                    printErr("#21DB0BColorParticle value $colorparticle is not a valid particle. Setting to NONE.#DA0808")
                     colorparticle = "NONE"
                 }
                 uncolorparticle = getString("UncolorParticle")
                 if (!existsParticle(uncolorparticle)){
-                    printErr("UncolorParticle value $uncolorparticle is not a valid particle. Setting to NONE.")
+                    printErr("#21DB0BUncolorParticle value $uncolorparticle is not a valid particle. Setting to NONE.#DA0808")
                     uncolorparticle = "NONE"
                 }
             }
