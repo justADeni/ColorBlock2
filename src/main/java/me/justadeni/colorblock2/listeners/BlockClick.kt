@@ -1,7 +1,5 @@
 package me.justadeni.colorblock2.listeners
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.colorables.*
 import me.justadeni.colorblock2.enums.Blocks
@@ -47,6 +45,10 @@ class BlockClick : Listener {
             if (!hand.type.isAir)
                 return
 
+            if (e.hand == EquipmentSlot.OFF_HAND)
+                if (player.inventory.itemInMainHand.type.isAir && player.inventory.itemInOffHand.type.isAir)
+                    return
+
             e.isCancelled = true
 
             val droponcreative: Boolean = if (iscreative) {
@@ -55,7 +57,7 @@ class BlockClick : Listener {
                 true
             }
 
-            when (Blocks.match(blockname)){
+            when (Blocks.match(blockname)) {
                 "SHULKER_BOX" -> ShulkerBox().unpaint(block, droponcreative, player)
                 "BED" -> Bed().unpaint(block, droponcreative, player)
                 "CONCRETE_POWDER" -> ConcretePowder().unpaint(block, droponcreative, player)
@@ -76,6 +78,10 @@ class BlockClick : Listener {
                 return
 
             val dye = hand.type.name
+
+            if (e.hand == EquipmentSlot.OFF_HAND)
+                if (player.inventory.itemInMainHand.type.name.contains("DYE") && player.inventory.itemInOffHand.type.name.contains("DYE"))
+                    return
 
             e.isCancelled = true
 
@@ -124,6 +130,8 @@ class BlockClick : Listener {
                 else
                     player.inventory.setItemInOffHand(ItemStack(Material.AIR))
             }
+
         }
+
     }
 }
