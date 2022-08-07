@@ -16,4 +16,4 @@ UncolorSound: "BLOCK_SOUL_SAND_BREAK"
 UncolorVolume: 5.0
 
 ColorParticle: "FIREWORKS_SPARK"
-UncolorParticle: "DRIP_WATER"
+UncolorParticle: "CRIT"

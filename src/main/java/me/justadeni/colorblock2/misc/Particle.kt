@@ -34,7 +34,7 @@ object Particle {
                                 (block.z + 0.5 + z)
                             )
                             drawLine(loc1, loc2, particle)
-                            delay(2.ticks)
+                            delay(10)
                         }
                     }
                 }
