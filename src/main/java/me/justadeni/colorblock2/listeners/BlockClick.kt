@@ -21,13 +21,6 @@ import java.util.UUID
 
 class BlockClick(private val plugin : ColorBlock2) : Listener {
 
-    private val blockMap = hashMapOf<UUID, Block>()
-
-    private suspend fun blockRunnable(uuid: UUID){
-        delay(20.ticks)
-        blockMap.remove(uuid)
-    }
-
     @EventHandler
     suspend fun onBlockClick(e : PlayerInteractEvent) {
         if (!(e.player.hasPermission(ColorBlock2.confik.usepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)))
@@ -39,77 +32,61 @@ class BlockClick(private val plugin : ColorBlock2) : Listener {
         if (e.hand == null)
             return
 
-        val uuid = e.player.uniqueId
         val block = e.clickedBlock!!
 
-        if (blockMap.containsKey(uuid)) {
+        val blockname = block.type.name
+
+        if (Blocks.match(blockname) == "")
             return
+
+        var slot = true
+        val player = e.player
+        val hand = if (e.hand == EquipmentSlot.HAND) {
+            player.inventory.itemInMainHand
         } else {
-            blockMap.put(uuid, block)
+            slot = false
+            player.inventory.itemInOffHand
         }
 
-            coroutineScope {
-                async(Dispatchers.IO) {
-                    blockRunnable(uuid)
-                }
+        val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
 
-                async(Dispatchers.Main) {
-                    val blockname = block.type.name
-
-                    if (Blocks.match(blockname) == "")
-                        return@async
-
-                    var slot = true
-                    val player = e.player
-                    val hand = if (e.hand == EquipmentSlot.HAND) {
-                        player.inventory.itemInMainHand
-                    } else {
-                        slot = false
-                        player.inventory.itemInOffHand
-                    }
-
-                    val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
-
-                    if (player.isSneaking) {
-                        if (!hand.type.isAir) {
-                            return@async
-                        }
-
-                        e.isCancelled = true
-
-                        val droponcreative: Boolean = if (iscreative) {
-                            ColorBlock2.confik.droponcreative
-                        } else {
-                            true
-                        }
-
-                        Uncolor(block, blockname, player, droponcreative)
-                    } else {
-                        if (!hand.type.name.contains("DYE"))
-                            return@async
-
-                        val dye = hand.type.name
-
-                        e.isCancelled = true
-
-                        val useoncreative: Boolean = if (iscreative) {
-                            ColorBlock2.confik.useoncreative
-                        } else {
-                            true
-                        }
-
-                        val droponcreative: Boolean = if (iscreative) {
-                            ColorBlock2.confik.droponcreative
-                        } else {
-                            true
-                        }
-
-
-                        Color(block, dye, blockname, player, slot, useoncreative, droponcreative)
-
-                    }
-
-                }
+        if (player.isSneaking) {
+            if (!hand.type.isAir) {
+                return
             }
+
+            e.isCancelled = true
+
+            val droponcreative: Boolean = if (iscreative) {
+                ColorBlock2.confik.droponcreative
+            } else {
+                true
+            }
+
+            Uncolor(block, blockname, player, droponcreative)
+        } else {
+            if (!hand.type.name.contains("DYE"))
+                return
+
+            val dye = hand.type.name
+
+            e.isCancelled = true
+
+            val useoncreative: Boolean = if (iscreative) {
+                ColorBlock2.confik.useoncreative
+            } else {
+                true
+            }
+
+            val droponcreative: Boolean = if (iscreative) {
+                ColorBlock2.confik.droponcreative
+            } else {
+                true
+            }
+
+
+            Color(block, dye, blockname, player, slot, useoncreative, droponcreative)
+        }
+
     }
 }

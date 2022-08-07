@@ -51,26 +51,26 @@ class Config(private val plugin : ColorBlock2) {
 
                 colorsound = getString("ColorSound")
                 if (!existsSound(colorsound)){
-                    printErr("ColorSound value " + colorsound + " is not a valid sound. Setting to NONE")
+                    printErr("ColorSound value $colorsound is not a valid sound. Setting to NONE")
                     colorsound = "NONE"
                 }
                 colorvolume = getDouble("ColorVolume")
 
                 uncolorsound = getString("UncolorSound")
                 if (!existsSound(uncolorsound)){
-                    printErr("UncolorSound value " + uncolorsound + " is not a valid sound. Setting to NONE.")
+                    printErr("UncolorSound value $uncolorsound is not a valid sound. Setting to NONE.")
                     uncolorsound = "NONE"
                 }
                 uncolorvolume = getDouble("UncolorVolume")
 
                 colorparticle = getString("ColorParticle")
                 if (!existsParticle(colorparticle)){
-                    printErr("ColorParticle value " + colorparticle + " is not a valid particle. Setting to NONE.")
+                    printErr("ColorParticle value $colorparticle is not a valid particle. Setting to NONE.")
                     colorparticle = "NONE"
                 }
                 uncolorparticle = getString("UncolorParticle")
                 if (!existsParticle(uncolorparticle)){
-                    printErr("UncolorParticle value " + uncolorparticle + " is not a valid particle. Setting to NONE.")
+                    printErr("UncolorParticle value $uncolorparticle is not a valid particle. Setting to NONE.")
                     uncolorparticle = "NONE"
                 }
             }
