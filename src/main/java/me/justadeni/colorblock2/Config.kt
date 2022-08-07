@@ -3,6 +3,9 @@ package me.justadeni.colorblock2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import me.justadeni.colorblock2.misc.Msg.color
+import org.bukkit.Particle
+import org.bukkit.Sound
 
 class Config(private val plugin : ColorBlock2) {
 
@@ -47,13 +50,29 @@ class Config(private val plugin : ColorBlock2) {
                 pluginprefix = getString("PluginPrefix")
 
                 colorsound = getString("ColorSound")
+                if (!existsSound(colorsound)){
+                    printErr("ColorSound value " + colorsound + " is not a valid sound. Setting to NONE")
+                    colorsound = "NONE"
+                }
                 colorvolume = getDouble("ColorVolume")
 
                 uncolorsound = getString("UncolorSound")
+                if (!existsSound(uncolorsound)){
+                    printErr("UncolorSound value " + uncolorsound + " is not a valid sound. Setting to NONE.")
+                    uncolorsound = "NONE"
+                }
                 uncolorvolume = getDouble("UncolorVolume")
 
                 colorparticle = getString("ColorParticle")
+                if (!existsParticle(colorparticle)){
+                    printErr("ColorParticle value " + colorparticle + " is not a valid particle. Setting to NONE.")
+                    colorparticle = "NONE"
+                }
                 uncolorparticle = getString("UncolorParticle")
+                if (!existsParticle(uncolorparticle)){
+                    printErr("UncolorParticle value " + uncolorparticle + " is not a valid particle. Setting to NONE.")
+                    uncolorparticle = "NONE"
+                }
             }
         }
     }
@@ -67,4 +86,33 @@ class Config(private val plugin : ColorBlock2) {
         return plugin.config.getString(query)!!
     }
 
+    private suspend fun existsSound(query: String) : Boolean {
+        if (query.equals("NONE", ignoreCase = true))
+            return true
+
+        return try {
+            val sound = Sound.valueOf(query)
+            true
+        } catch (e : Error){
+            false
+        }
+    }
+
+    private suspend fun existsParticle(query: String) : Boolean {
+        if (query.equals("NONE", ignoreCase = true))
+            return true
+
+        return try {
+            val sound = Particle.valueOf(query)
+            true
+        } catch (e : Error){
+            false
+        }
+    }
+
+    private suspend fun printErr(msg : String) {
+        val log = plugin.logger
+        log.warning("ColorBlock Error while loading config".color())
+        log.warning(msg.color())
+    }
 }
