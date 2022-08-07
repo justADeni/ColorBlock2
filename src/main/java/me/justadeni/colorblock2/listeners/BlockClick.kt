@@ -46,7 +46,7 @@ class BlockClick : Listener {
                 return
 
             if (e.hand == EquipmentSlot.OFF_HAND)
-                if (player.inventory.itemInMainHand.type.isAir && player.inventory.itemInOffHand.type.isAir)
+                if (player.inventory.itemInMainHand.type.isAir)
                     return
 
             e.isCancelled = true
@@ -80,7 +80,7 @@ class BlockClick : Listener {
             val dye = hand.type.name
 
             if (e.hand == EquipmentSlot.OFF_HAND)
-                if (player.inventory.itemInMainHand.type.name.contains("DYE") && player.inventory.itemInOffHand.type.name.contains("DYE"))
+                if (player.inventory.itemInMainHand.type.name.contains("DYE"))
                     return
 
             e.isCancelled = true

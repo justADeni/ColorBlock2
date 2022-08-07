@@ -6,6 +6,7 @@ import kotlinx.coroutines.coroutineScope
 import me.justadeni.colorblock2.misc.Msg.color
 import org.bukkit.Particle
 import org.bukkit.Sound
+import java.lang.Exception
 
 class Config(private val plugin : ColorBlock2) {
 
@@ -53,26 +54,26 @@ class Config(private val plugin : ColorBlock2) {
 
                 colorsound = getString("ColorSound")
                 if (!existsSound(colorsound)){
-                    printErr("#21DB0BColorSound value $colorsound is not a valid sound. Setting to NONE#DA0808")
+                    printErr("#21DB0BColorSound value " + colorsound + " is not a valid sound. Using NONE#DA0808")
                     colorsound = "NONE"
                 }
                 colorvolume = getDouble("ColorVolume")
 
                 uncolorsound = getString("UncolorSound")
                 if (!existsSound(uncolorsound)){
-                    printErr("#21DB0BUncolorSound value $uncolorsound is not a valid sound. Setting to NONE.#DA0808")
+                    printErr("#21DB0BUncolorSound value " + uncolorsound + " is not a valid sound. Using NONE.#DA0808")
                     uncolorsound = "NONE"
                 }
                 uncolorvolume = getDouble("UncolorVolume")
 
                 colorparticle = getString("ColorParticle")
                 if (!existsParticle(colorparticle)){
-                    printErr("#21DB0BColorParticle value $colorparticle is not a valid particle. Setting to NONE.#DA0808")
+                    printErr("#21DB0BColorParticle value " + colorparticle + " is not a valid particle. Using NONE.#DA0808")
                     colorparticle = "NONE"
                 }
                 uncolorparticle = getString("UncolorParticle")
                 if (!existsParticle(uncolorparticle)){
-                    printErr("#21DB0BUncolorParticle value $uncolorparticle is not a valid particle. Setting to NONE.#DA0808")
+                    printErr("#21DB0BUncolorParticle value " + uncolorparticle + " is not a valid particle. Using NONE.#DA0808")
                     uncolorparticle = "NONE"
                 }
             }
@@ -95,7 +96,7 @@ class Config(private val plugin : ColorBlock2) {
         return try {
             val sound = Sound.valueOf(query)
             true
-        } catch (e : Error){
+        } catch (e : Exception){
             false
         }
     }
@@ -107,14 +108,15 @@ class Config(private val plugin : ColorBlock2) {
         return try {
             val sound = Particle.valueOf(query)
             true
-        } catch (e : Error){
+        } catch (e : Exception){
             false
         }
     }
 
     private suspend fun printErr(msg : String) {
-        val log = plugin.logger
-        log.warning("#21DB0BColorBlock Error while loading config#DA0808".color())
-        log.warning(msg.color())
+        val console = plugin.server.consoleSender
+
+        console.sendMessage("#21DB0BColorBlock Error while loading config#DA0808".color())
+        console.sendMessage(msg.color())
     }
 }
