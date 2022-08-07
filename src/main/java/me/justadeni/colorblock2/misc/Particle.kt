@@ -1,10 +1,7 @@
 package me.justadeni.colorblock2.misc
 
 import com.github.shynixn.mccoroutine.bukkit.ticks
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.block.Block
@@ -16,7 +13,7 @@ object Particle {
     suspend fun Particle(type: String, block: Block) {
 
         coroutineScope {
-            async {
+            async(Dispatchers.IO) {
 
                 if (type.equals("NONE", ignoreCase = true))
                     return@async

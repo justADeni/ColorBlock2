@@ -29,11 +29,11 @@ abstract class Colorable {
         val newBlockMat = getMaterial(newBlock)!!
         block.type = newBlockMat
 
-        Sound.Sound(ColorBlock2.confik.colorsound, ColorBlock2.confik.colorvolume, player)
-        Particle.Particle(ColorBlock2.confik.colorparticle, block)
-
         if (dropdye)
             dropdye(block, oldDye)
+
+        Sound.Sound(ColorBlock2.confik.colorsound, ColorBlock2.confik.colorvolume, player)
+        Particle.Particle(ColorBlock2.confik.colorparticle, block)
 
         return true
     }
@@ -49,11 +49,11 @@ abstract class Colorable {
         val newBlockMat = getMaterial(default)!!
         block.type = newBlockMat
 
-        Sound.Sound(ColorBlock2.confik.uncolorsound, ColorBlock2.confik.uncolorvolume, player)
-        Particle.Particle(ColorBlock2.confik.uncolorparticle, block)
-
         if (dropdye)
             dropdye(block, oldDye)
+
+        Sound.Sound(ColorBlock2.confik.uncolorsound, ColorBlock2.confik.uncolorvolume, player)
+        Particle.Particle(ColorBlock2.confik.uncolorparticle, block)
     }
 
     suspend fun dropdye(block: Block, dye: String){

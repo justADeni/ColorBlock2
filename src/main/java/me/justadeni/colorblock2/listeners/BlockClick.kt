@@ -31,12 +31,10 @@ class BlockClick : Listener {
         if (Blocks.match(blockname) == "")
             return
 
-        var slot = true
         val player = e.player
         val hand = if (e.hand == EquipmentSlot.HAND) {
             player.inventory.itemInMainHand
         } else {
-            slot = false
             player.inventory.itemInOffHand
         }
 
@@ -46,9 +44,8 @@ class BlockClick : Listener {
             if (!(player.hasPermission(ColorBlock2.confik.undyepermission) || player.hasPermission(ColorBlock2.confik.adminpermission)))
                 return
 
-            if (!hand.type.isAir) {
+            if (!hand.type.isAir)
                 return
-            }
 
             e.isCancelled = true
 
@@ -94,52 +91,39 @@ class BlockClick : Listener {
                 true
             }
 
-            var subtract = useoncreative
+            val subtract = when (Blocks.match(blockname)) {
+                "SHULKER_BOX" -> ShulkerBox().paint(block, dye, droponcreative, player)
+                "BED" -> Bed().paint(block, dye, droponcreative, player)
+                "CONCRETE_POWDER" -> ConcretePowder().paint(block, dye, droponcreative, player)
+                "CONCRETE" -> Concrete().paint(block, dye, droponcreative, player)
+                "GLAZED_TERRACOTTA" -> GlazedTerracotta().paint(block, dye, droponcreative, player)
+                "TERRACOTTA" -> Terracotta().paint(block, dye, droponcreative, player)
+                "CARPET" -> Carpet().paint(block, dye, droponcreative, player)
+                "STAINED_GLASS_PANE" -> StainedGlassPane().paint(block, dye, droponcreative, player)
+                "STAINED_GLASS" -> StainedGlass().paint(block, dye, droponcreative, player)
+                "WOOL" -> Wool().paint(block, dye, droponcreative, player)
+                "CANDLE" -> Candle().paint(block, dye, droponcreative, player)
+                else -> false
+            }
 
-            coroutineScope {
 
-                launch {
+            if (!useoncreative)
+                return
 
-                    when (Blocks.match(blockname)) {
-                        "SHULKER_BOX" -> subtract = ShulkerBox().paint(block, dye, droponcreative, player)
-                        "BED" -> subtract = Bed().paint(block, dye, droponcreative, player)
-                        "CONCRETE_POWDER" -> subtract = ConcretePowder().paint(block, dye, droponcreative, player)
-                        "CONCRETE" -> subtract = Concrete().paint(block, dye, droponcreative, player)
-                        "GLAZED_TERRACOTTA" -> subtract = GlazedTerracotta().paint(block, dye, droponcreative, player)
-                        "TERRACOTTA" -> subtract = Terracotta().paint(block, dye, droponcreative, player)
-                        "CARPET" -> subtract = Carpet().paint(block, dye, droponcreative, player)
-                        "STAINED_GLASS_PANE" -> subtract = StainedGlassPane().paint(block, dye, droponcreative, player)
-                        "STAINED_GLASS" -> subtract = StainedGlass().paint(block, dye, droponcreative, player)
-                        "WOOL" -> subtract = Wool().paint(block, dye, droponcreative, player)
-                        "CANDLE" -> subtract = Candle().paint(block, dye, droponcreative, player)
-                    }
-                }
+            if (!subtract)
+                return
 
-                launch {
-                    if (!useoncreative)
-                        return@launch
-
-                    if (!subtract)
-                        return@launch
-
-                    if (slot) {
-                        val itemstacc = player.inventory.itemInMainHand
-                        if (itemstacc.amount > 1) {
-                            player.inventory.setItemInMainHand(ItemStack(itemstacc.type, itemstacc.amount - 1))
-                        } else {
-                            player.inventory.setItemInMainHand(ItemStack(Material.AIR))
-                        }
-                    } else {
-                        val itemstacc = player.inventory.itemInOffHand
-                        if (itemstacc.amount > 1) {
-                            player.inventory.setItemInOffHand(ItemStack(itemstacc.type, itemstacc.amount - 1))
-                        } else {
-                            player.inventory.setItemInOffHand(ItemStack(Material.AIR))
-                        }
-                    }
-                }
+            if (e.hand == EquipmentSlot.HAND) {
+                if (hand.amount > 1)
+                    player.inventory.setItemInMainHand(ItemStack(hand.type, hand.amount - 1))
+                else
+                    player.inventory.setItemInMainHand(ItemStack(Material.AIR))
+            } else {
+                if (hand.amount > 1)
+                    player.inventory.setItemInOffHand(ItemStack(hand.type, hand.amount - 1))
+                else
+                    player.inventory.setItemInOffHand(ItemStack(Material.AIR))
             }
         }
-
     }
 }

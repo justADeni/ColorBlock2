@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2.colorables
 
+import kotlinx.coroutines.coroutineScope
 import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.enums.Dyes
 import me.justadeni.colorblock2.misc.Particle

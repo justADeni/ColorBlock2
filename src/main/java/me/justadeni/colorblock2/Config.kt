@@ -114,7 +114,7 @@ class Config(private val plugin : ColorBlock2) {
 
     private suspend fun printErr(msg : String) {
         val log = plugin.logger
-        log.warning("ColorBlock Error while loading config".color())
+        log.warning("#21DB0BColorBlock Error while loading config#DA0808".color())
         log.warning(msg.color())
     }
 }
