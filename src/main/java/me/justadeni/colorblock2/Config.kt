@@ -54,26 +54,26 @@ class Config(private val plugin : ColorBlock2) {
 
                 colorsound = getString("ColorSound")
                 if (!existsSound(colorsound)){
-                    printErr("#21DB0BColorSound value " + colorsound + " is not a valid sound. Using NONE#DA0808")
+                    printErr("ColorSound value $colorsound is not a valid sound. Using NONE.")
                     colorsound = "NONE"
                 }
                 colorvolume = getDouble("ColorVolume")
 
                 uncolorsound = getString("UncolorSound")
                 if (!existsSound(uncolorsound)){
-                    printErr("#21DB0BUncolorSound value " + uncolorsound + " is not a valid sound. Using NONE.#DA0808")
+                    printErr("UncolorSound value $uncolorsound is not a valid sound. Using NONE.")
                     uncolorsound = "NONE"
                 }
                 uncolorvolume = getDouble("UncolorVolume")
 
                 colorparticle = getString("ColorParticle")
                 if (!existsParticle(colorparticle)){
-                    printErr("#21DB0BColorParticle value " + colorparticle + " is not a valid particle. Using NONE.#DA0808")
+                    printErr("ColorParticle value $colorparticle is not a valid particle. Using NONE.")
                     colorparticle = "NONE"
                 }
                 uncolorparticle = getString("UncolorParticle")
                 if (!existsParticle(uncolorparticle)){
-                    printErr("#21DB0BUncolorParticle value " + uncolorparticle + " is not a valid particle. Using NONE.#DA0808")
+                    printErr("UncolorParticle value $uncolorparticle is not a valid particle. Using NONE.")
                     uncolorparticle = "NONE"
                 }
             }
@@ -94,7 +94,7 @@ class Config(private val plugin : ColorBlock2) {
             return true
 
         return try {
-            val sound = Sound.valueOf(query)
+            Sound.valueOf(query)
             true
         } catch (e : Exception){
             false
@@ -106,7 +106,7 @@ class Config(private val plugin : ColorBlock2) {
             return true
 
         return try {
-            val sound = Particle.valueOf(query)
+            Particle.valueOf(query)
             true
         } catch (e : Exception){
             false
@@ -116,7 +116,10 @@ class Config(private val plugin : ColorBlock2) {
     private suspend fun printErr(msg : String) {
         val console = plugin.server.consoleSender
 
-        console.sendMessage("#21DB0BColorBlock Error while loading config#DA0808".color())
-        console.sendMessage(msg.color())
+        val color1 = "#AB4C37"
+        val color2 = "#FF0101"
+
+        console.sendMessage((color1 + "ColorBlock Error while loading config" + color2).color())
+        console.sendMessage((color1 + msg + color2).color())
     }
 }
