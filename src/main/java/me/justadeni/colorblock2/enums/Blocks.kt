@@ -13,8 +13,8 @@ enum class Blocks {
     GLAZED_TERRACOTTA,
     TERRACOTTA,
     CARPET,
-    STAINED_GLASS_PANE,
-    STAINED_GLASS,
+    GLASS_PANE,
+    GLASS,
     WOOL,
     CANDLE;
 

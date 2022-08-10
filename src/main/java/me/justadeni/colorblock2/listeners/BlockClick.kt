@@ -65,8 +65,8 @@ class BlockClick : Listener {
                 "GLAZED_TERRACOTTA" -> GlazedTerracotta().unpaint(block, droponcreative, player)
                 "TERRACOTTA" -> Terracotta().unpaint(block, droponcreative, player)
                 "CARPET" -> Carpet().unpaint(block, droponcreative, player)
-                "STAINED_GLASS_PANE" -> StainedGlassPane().unpaint(block, droponcreative, player)
-                "STAINED_GLASS" -> StainedGlass().unpaint(block, droponcreative, player)
+                "GLASS_PANE" -> StainedGlassPane().unpaint(block, droponcreative, player)
+                "GLASS" -> StainedGlass().unpaint(block, droponcreative, player)
                 "WOOL" -> Wool().unpaint(block, droponcreative, player)
                 "CANDLE" -> Candle().unpaint(block, droponcreative, player)
             }
@@ -105,8 +105,8 @@ class BlockClick : Listener {
                 "GLAZED_TERRACOTTA" -> GlazedTerracotta().paint(block, dye, droponcreative, player)
                 "TERRACOTTA" -> Terracotta().paint(block, dye, droponcreative, player)
                 "CARPET" -> Carpet().paint(block, dye, droponcreative, player)
-                "STAINED_GLASS_PANE" -> StainedGlassPane().paint(block, dye, droponcreative, player)
-                "STAINED_GLASS" -> StainedGlass().paint(block, dye, droponcreative, player)
+                "GLASS_PANE" -> StainedGlassPane().paint(block, dye, droponcreative, player)
+                "GLASS" -> StainedGlass().paint(block, dye, droponcreative, player)
                 "WOOL" -> Wool().paint(block, dye, droponcreative, player)
                 "CANDLE" -> Candle().paint(block, dye, droponcreative, player)
                 else -> false
