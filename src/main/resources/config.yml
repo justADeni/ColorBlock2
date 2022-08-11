@@ -1,5 +1,10 @@
+WorldGuardHook: false
+LandsHook: false
+
 DropOnCreative: false
+DropOnSurvival: true
 UseOnCreative: false
+UseOnSurvival: true
 
 DyePermission: "colorblock.dye"
 UndyePermission: "colorblock.undye"

@@ -16,6 +16,7 @@ class BedClick : Listener {
                 if (e.player.inventory.itemInMainHand.type.isAir || e.player.inventory.itemInOffHand.type.isAir)
                     if (e.bed.blockData.material != Material.WHITE_BED)
                         e.isCancelled = true
+
         } else {
             if (e.player.hasPermission(ColorBlock2.confik.dyepermission) || e.player.hasPermission(ColorBlock2.confik.adminpermission)){
 

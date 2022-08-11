@@ -5,7 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import me.justadeni.colorblock2.ColorBlock2
-import me.justadeni.colorblock2.misc.Msg.color
+import me.justadeni.colorblock2.misc.Msg.Companion.color
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -41,6 +41,7 @@ object Command : SuspendingCommandExecutor{
                     sender.sendMessage(pluginprefix + ColorBlock2.confik.configreloaded.color())
                     ColorBlock2.confik.reload()
                     ColorBlock2.confik.assign()
+                    ColorBlock2.compatibilityManager.init()
                     return@async true
                 }
                 sender.sendMessage(pluginprefix + ColorBlock2.confik.wrongargserror.color())

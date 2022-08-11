@@ -3,15 +3,19 @@ package me.justadeni.colorblock2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import me.justadeni.colorblock2.misc.Msg.color
 import org.bukkit.Particle
 import org.bukkit.Sound
 import java.lang.Exception
 
 class Config(private val plugin : ColorBlock2) {
 
+    var worldguardhook : Boolean = false
+    var landshook : Boolean = false
+
     var droponcreative : Boolean = false
+    var droponsurvival : Boolean = true
     var useoncreative  : Boolean = false
+    var useonsurvival  : Boolean = true
 
     lateinit var dyepermission   : String
     lateinit var undyepermission : String
@@ -40,8 +44,13 @@ class Config(private val plugin : ColorBlock2) {
     suspend fun assign(){
         coroutineScope {
             async(Dispatchers.IO) {
+                worldguardhook = getBool("WorldGuardHook")
+                landshook = getBool("LandsHook")
+
                 droponcreative = getBool("DropOnCreative")
+                droponsurvival = getBool("DropOnSurvival")
                 useoncreative = getBool("UseOnCreative")
+                useonsurvival = getBool("UseOnSurvival")
 
                 dyepermission = getString("DyePermission")
                 undyepermission = getString("UndyePermission")
@@ -54,26 +63,26 @@ class Config(private val plugin : ColorBlock2) {
 
                 colorsound = getString("ColorSound")
                 if (!existsSound(colorsound)){
-                    printErr("ColorSound value $colorsound is not a valid sound. Using NONE.")
+                    ColorBlock2.msg.printError("ColorSound value $colorsound is not a valid sound. Using NONE.")
                     colorsound = "NONE"
                 }
                 colorvolume = getDouble("ColorVolume")
 
                 uncolorsound = getString("UncolorSound")
                 if (!existsSound(uncolorsound)){
-                    printErr("UncolorSound value $uncolorsound is not a valid sound. Using NONE.")
+                    ColorBlock2.msg.printError("UncolorSound value $uncolorsound is not a valid sound. Using NONE.")
                     uncolorsound = "NONE"
                 }
                 uncolorvolume = getDouble("UncolorVolume")
 
                 colorparticle = getString("ColorParticle")
                 if (!existsParticle(colorparticle)){
-                    printErr("ColorParticle value $colorparticle is not a valid particle. Using NONE.")
+                    ColorBlock2.msg.printError("ColorParticle value $colorparticle is not a valid particle. Using NONE.")
                     colorparticle = "NONE"
                 }
                 uncolorparticle = getString("UncolorParticle")
                 if (!existsParticle(uncolorparticle)){
-                    printErr("UncolorParticle value $uncolorparticle is not a valid particle. Using NONE.")
+                    ColorBlock2.msg.printError("UncolorParticle value $uncolorparticle is not a valid particle. Using NONE.")
                     uncolorparticle = "NONE"
                 }
             }
@@ -111,15 +120,5 @@ class Config(private val plugin : ColorBlock2) {
         } catch (e : Exception){
             false
         }
-    }
-
-    private suspend fun printErr(msg : String) {
-        val console = plugin.server.consoleSender
-
-        val color1 = "#AB4C37"
-        val color2 = "#FF0101"
-
-        console.sendMessage((color1 + "ColorBlock Error while loading config" + color2).color())
-        console.sendMessage((color1 + msg + color2).color())
     }
 }

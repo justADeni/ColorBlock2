@@ -30,6 +30,10 @@ class BlockClick : Listener {
             return
 
         val player = e.player
+
+        if (!ColorBlock2.compatibilityManager.canDye(player, block))
+            return
+
         val hand = if (e.hand == EquipmentSlot.HAND) {
             player.inventory.itemInMainHand
         } else {
