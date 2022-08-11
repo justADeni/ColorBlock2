@@ -26,7 +26,7 @@ object Particle {
                     for (y in -1..1) {
                         for (z in -1..1) {
 
-                            if ((0..100).random() > ColorBlock2.confik.particlechance) {
+                            if ((0..100).random() < ColorBlock2.confik.particlechance) {
 
                                 val loc2 = Location(
                                     block.world,
