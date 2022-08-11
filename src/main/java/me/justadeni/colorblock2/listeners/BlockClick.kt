@@ -89,10 +89,10 @@ class BlockClick : Listener {
 
             e.isCancelled = true
 
-            val useoncreative: Boolean = if (iscreative) {
+            val use: Boolean = if (iscreative) {
                 ColorBlock2.confik.useoncreative
             } else {
-                true
+                ColorBlock2.confik.useonsurvival
             }
 
             val subtract = when (Blocks.match(blockname)) {
@@ -110,7 +110,7 @@ class BlockClick : Listener {
                 else -> false
             }
 
-            if (!useoncreative)
+            if (!use)
                 return
 
             if (!subtract)
