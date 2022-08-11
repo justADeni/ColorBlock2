@@ -7,7 +7,6 @@ import com.github.shynixn.mccoroutine.bukkit.setSuspendingTabCompleter
 import me.justadeni.colorblock2.command.Command
 import me.justadeni.colorblock2.command.TabComplete
 import me.justadeni.colorblock2.compatibility.CompatibilityManager
-import me.justadeni.colorblock2.listeners.BedClick
 import me.justadeni.colorblock2.listeners.BlockClick
 import me.justadeni.colorblock2.misc.Msg
 
@@ -26,7 +25,6 @@ class ColorBlock2 : SuspendingJavaPlugin() {
         saveDefaultConfig()
         compatibilityManager.init()
         server.pluginManager.registerSuspendingEvents(BlockClick(), this)
-        server.pluginManager.registerSuspendingEvents(BedClick(), this)
         getCommand("colorblock")?.setSuspendingExecutor(Command)
         getCommand("colorblock")?.setSuspendingTabCompleter(TabComplete)
         confik.assign()
