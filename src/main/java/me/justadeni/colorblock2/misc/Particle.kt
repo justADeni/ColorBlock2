@@ -2,6 +2,7 @@ package me.justadeni.colorblock2.misc
 
 import com.github.shynixn.mccoroutine.bukkit.ticks
 import kotlinx.coroutines.*
+import me.justadeni.colorblock2.ColorBlock2
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.block.Block
@@ -24,14 +25,18 @@ object Particle {
                 for (x in -1..1) {
                     for (y in -1..1) {
                         for (z in -1..1) {
-                            val loc2 = Location(
-                                block.world,
-                                (block.x + 0.5 + x),
-                                (block.y + 0.5 + y),
-                                (block.z + 0.5 + z)
-                            )
-                            drawLine(loc1, loc2, particle)
-                            //delay(10)
+
+                            if ((0..100).random() > ColorBlock2.confik.particlechance) {
+
+                                val loc2 = Location(
+                                    block.world,
+                                    (block.x + 0.5 + x),
+                                    (block.y + 0.5 + y),
+                                    (block.z + 0.5 + z)
+                                )
+                                drawLine(loc1, loc2, particle)
+                                //delay(10)
+                            }
                         }
                     }
                 }

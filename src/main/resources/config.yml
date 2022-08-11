@@ -38,3 +38,7 @@ UncolorVolume: 5.0
 #Allows you to set Particle effects when dyeing or undyeing a block. Set to "NONE" to disable
 ColorParticle: "FIREWORKS_SPARK"
 UncolorParticle: "CRIT"
+
+#Particle Chance of appearing, 0 to 100
+#0 to disable, 100 = all 27 particles
+ParticleChance: 50

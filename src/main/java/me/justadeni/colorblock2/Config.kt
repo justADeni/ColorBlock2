@@ -35,6 +35,8 @@ class Config(private val plugin : ColorBlock2) {
     lateinit var colorparticle : String
     lateinit var uncolorparticle : String
 
+    var particlechance : Int = 50
+
     fun save(){
         plugin.saveConfig()
     }
@@ -85,6 +87,7 @@ class Config(private val plugin : ColorBlock2) {
                     ColorBlock2.msg.printError("UncolorParticle value $uncolorparticle is not a valid particle. Using NONE.")
                     uncolorparticle = "NONE"
                 }
+                particlechance = getInt("ParticleChance")
             }
         }
     }
@@ -93,6 +96,9 @@ class Config(private val plugin : ColorBlock2) {
     }
     private suspend fun getDouble(query: String) : Double {
         return plugin.config.getDouble(query)
+    }
+    private suspend fun getInt(query: String) : Int {
+        return plugin.config.getInt(query)
     }
     private suspend fun getString(query: String) : String {
         return plugin.config.getString(query)!!
