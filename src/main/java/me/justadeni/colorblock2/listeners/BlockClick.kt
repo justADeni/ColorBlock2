@@ -42,6 +42,12 @@ class BlockClick : Listener {
 
         val iscreative: Boolean = player.gameMode == GameMode.CREATIVE
 
+        val drop: Boolean = if (iscreative) {
+            ColorBlock2.confik.droponcreative
+        } else {
+            ColorBlock2.confik.droponsurvival
+        }
+
         if (player.isSneaking) {
             if (!(player.hasPermission(ColorBlock2.confik.undyepermission) || player.hasPermission(ColorBlock2.confik.adminpermission)))
                 return
@@ -55,24 +61,18 @@ class BlockClick : Listener {
 
             e.isCancelled = true
 
-            val droponcreative: Boolean = if (iscreative) {
-                ColorBlock2.confik.droponcreative
-            } else {
-                true
-            }
-
             when (Blocks.match(blockname)) {
-                "SHULKER_BOX" -> ShulkerBox().unpaint(block, droponcreative, player)
-                "BED" -> Bed().unpaint(block, droponcreative, player)
-                "CONCRETE_POWDER" -> ConcretePowder().unpaint(block, droponcreative, player)
-                "CONCRETE" -> Concrete().unpaint(block, droponcreative, player)
-                "GLAZED_TERRACOTTA" -> GlazedTerracotta().unpaint(block, droponcreative, player)
-                "TERRACOTTA" -> Terracotta().unpaint(block, droponcreative, player)
-                "CARPET" -> Carpet().unpaint(block, droponcreative, player)
-                "GLASS_PANE" -> StainedGlassPane().unpaint(block, droponcreative, player)
-                "GLASS" -> StainedGlass().unpaint(block, droponcreative, player)
-                "WOOL" -> Wool().unpaint(block, droponcreative, player)
-                "CANDLE" -> Candle().unpaint(block, droponcreative, player)
+                "SHULKER_BOX" -> ShulkerBox().unpaint(block, drop, player)
+                "BED" -> Bed().unpaint(block, drop, player)
+                "CONCRETE_POWDER" -> ConcretePowder().unpaint(block, drop, player)
+                "CONCRETE" -> Concrete().unpaint(block, drop, player)
+                "GLAZED_TERRACOTTA" -> GlazedTerracotta().unpaint(block, drop, player)
+                "TERRACOTTA" -> Terracotta().unpaint(block, drop, player)
+                "CARPET" -> Carpet().unpaint(block, drop, player)
+                "GLASS_PANE" -> StainedGlassPane().unpaint(block, drop, player)
+                "GLASS" -> StainedGlass().unpaint(block, drop, player)
+                "WOOL" -> Wool().unpaint(block, drop, player)
+                "CANDLE" -> Candle().unpaint(block, drop, player)
             }
         } else {
             if (!(player.hasPermission(ColorBlock2.confik.dyepermission) || player.hasPermission(ColorBlock2.confik.adminpermission)))
@@ -95,27 +95,20 @@ class BlockClick : Listener {
                 true
             }
 
-            val droponcreative: Boolean = if (iscreative) {
-                ColorBlock2.confik.droponcreative
-            } else {
-                true
-            }
-
             val subtract = when (Blocks.match(blockname)) {
-                "SHULKER_BOX" -> ShulkerBox().paint(block, dye, droponcreative, player)
-                "BED" -> Bed().paint(block, dye, droponcreative, player)
-                "CONCRETE_POWDER" -> ConcretePowder().paint(block, dye, droponcreative, player)
-                "CONCRETE" -> Concrete().paint(block, dye, droponcreative, player)
-                "GLAZED_TERRACOTTA" -> GlazedTerracotta().paint(block, dye, droponcreative, player)
-                "TERRACOTTA" -> Terracotta().paint(block, dye, droponcreative, player)
-                "CARPET" -> Carpet().paint(block, dye, droponcreative, player)
-                "GLASS_PANE" -> StainedGlassPane().paint(block, dye, droponcreative, player)
-                "GLASS" -> StainedGlass().paint(block, dye, droponcreative, player)
-                "WOOL" -> Wool().paint(block, dye, droponcreative, player)
-                "CANDLE" -> Candle().paint(block, dye, droponcreative, player)
+                "SHULKER_BOX" -> ShulkerBox().paint(block, dye, drop, player)
+                "BED" -> Bed().paint(block, dye, drop, player)
+                "CONCRETE_POWDER" -> ConcretePowder().paint(block, dye, drop, player)
+                "CONCRETE" -> Concrete().paint(block, dye, drop, player)
+                "GLAZED_TERRACOTTA" -> GlazedTerracotta().paint(block, dye, drop, player)
+                "TERRACOTTA" -> Terracotta().paint(block, dye, drop, player)
+                "CARPET" -> Carpet().paint(block, dye, drop, player)
+                "GLASS_PANE" -> StainedGlassPane().paint(block, dye, drop, player)
+                "GLASS" -> StainedGlass().paint(block, dye, drop, player)
+                "WOOL" -> Wool().paint(block, dye, drop, player)
+                "CANDLE" -> Candle().paint(block, dye, drop, player)
                 else -> false
             }
-
 
             if (!useoncreative)
                 return
