@@ -1,11 +1,11 @@
 package me.justadeni.colorblock2.command
 
+import com.github.justadeni.HexColorLib.color
 import com.github.shynixn.mccoroutine.bukkit.SuspendingCommandExecutor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import me.justadeni.colorblock2.ColorBlock2
-import me.justadeni.colorblock2.misc.Msg.Companion.color
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
