@@ -11,7 +11,7 @@ import java.util.SplittableRandom
 
 object Particle {
 
-    val random : SplittableRandom = SplittableRandom()
+    private val random : SplittableRandom = SplittableRandom()
 
     suspend fun Particle(type: String, block: Block) {
 
@@ -56,11 +56,7 @@ object Particle {
         val vector: Vector = p2.clone().subtract(p1).normalize().multiply(space)
         var length = 0.0
         while (length < distance) {
-            coroutineScope {
-                launch {
-                    loc1.world?.spawnParticle(particle, p1.x, p1.y, p1.z, 1)
-                }
-            }
+            loc1.world?.spawnParticle(particle, p1.x, p1.y, p1.z, 1)
             length += space
             p1.add(vector)
         }
