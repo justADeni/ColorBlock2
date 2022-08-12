@@ -7,9 +7,11 @@ import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.block.Block
 import org.bukkit.util.Vector
-
+import java.util.SplittableRandom
 
 object Particle {
+
+    val random : SplittableRandom = SplittableRandom()
 
     suspend fun Particle(type: String, block: Block) {
 
@@ -26,7 +28,7 @@ object Particle {
                     for (y in -1..1) {
                         for (z in -1..1) {
 
-                            if ((0..100).random() < ColorBlock2.confik.particlechance) {
+                            if (random.split().nextInt(100) < ColorBlock2.confik.particlechance) {
 
                                 val loc2 = Location(
                                     block.world,
@@ -35,7 +37,7 @@ object Particle {
                                     (block.z + 0.5 + z)
                                 )
                                 drawLine(loc1, loc2, particle)
-                                //delay(10)
+                                delay(4)
                             }
                         }
                     }
