@@ -5,7 +5,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.bukkit.Particle
 import org.bukkit.Sound
-import java.lang.Exception
 
 class Config(private val plugin : ColorBlock2) {
 
@@ -111,7 +110,7 @@ class Config(private val plugin : ColorBlock2) {
         return try {
             Sound.valueOf(query)
             true
-        } catch (e : Exception){
+        } catch (e : EnumConstantNotPresentException){
             false
         }
     }
@@ -123,7 +122,7 @@ class Config(private val plugin : ColorBlock2) {
         return try {
             Particle.valueOf(query)
             true
-        } catch (e : Exception){
+        } catch (e : EnumConstantNotPresentException){
             false
         }
     }

@@ -31,7 +31,7 @@ class BlockClick : Listener {
 
         val player = e.player
 
-        if (!ColorBlock2.compatibilityManager.canDye(player, block))
+        if (!ColorBlock2.manager.canDye(player, block))
             return
 
         val hand = if (e.hand == EquipmentSlot.HAND) {

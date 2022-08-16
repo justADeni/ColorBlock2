@@ -1,41 +1,54 @@
 package me.justadeni.colorblock2.compatibility
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter
-import com.sk89q.worldedit.math.BlockVector3
 import com.sk89q.worldguard.WorldGuard
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin
-import com.sk89q.worldguard.protection.ApplicableRegionSet
+import com.sk89q.worldguard.protection.flags.Flag
 import com.sk89q.worldguard.protection.flags.Flags
-import com.sk89q.worldguard.protection.managers.RegionManager
-import com.sk89q.worldguard.protection.regions.ProtectedRegion
-import com.sk89q.worldguard.protection.regions.RegionContainer
+import com.sk89q.worldguard.protection.flags.StateFlag
+import com.sk89q.worldguard.protection.flags.registry.FlagConflictException
+import com.sk89q.worldguard.protection.flags.registry.FlagRegistry
+import me.justadeni.colorblock2.ColorBlock2
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
 
-object WorldGuard {
+class WorldGuard(player: Player, block: Block, plugin: ColorBlock2) : General(player, block, plugin) {
+    companion object {
+        private var BLOCK_COLOR: StateFlag? = null
 
-    fun canDye(player: Player, block: Block): Boolean {
-        /*
-        val container: RegionContainer = WorldGuard.getInstance().platform.regionContainer
-        val regionmanager: RegionManager = container.get(BukkitAdapter.adapt(block.world)) ?: return true
-        val vector: BlockVector3? = BukkitAdapter.asBlockVector(block.location)
-        val set: ApplicableRegionSet = regionmanager.getApplicableRegions(vector)
-        if (set.size() == 0)
-            return true
+        fun flag(): Boolean {
+            if (BLOCK_COLOR != null)
+                return true
 
-        var topregion: ProtectedRegion? = null
-        for (region in set) {
-            if (topregion == null)
-                topregion = region
-            else if (region.priority > topregion.priority)
-                topregion = region
+            val registry: FlagRegistry = WorldGuard.getInstance().flagRegistry
+
+            return try {
+                val flag = StateFlag("block-color", true)
+                registry.register(flag)
+                BLOCK_COLOR = flag
+                true
+            } catch (e: FlagConflictException) {
+                val existing: Flag<*>? = registry.get("block-color")
+
+                if (existing is StateFlag) {
+                    BLOCK_COLOR = existing
+                    true
+                } else {
+                    false
+                }
+            }
+
         }
-         */
+    }
+
+    override fun can(): Boolean {
+        if (player.hasPermission(ColorBlock2.confik.adminpermission))
+            return true
 
         val localPlayer = WorldGuardPlugin.inst().wrapPlayer(player)
         val query = WorldGuard.getInstance().platform.regionContainer.createQuery()
-        return query.testState(BukkitAdapter.adapt(block.location), localPlayer, Flags.BLOCK_BREAK)
+        return query.testState(BukkitAdapter.adapt(block.location), localPlayer, BLOCK_COLOR)
     }
 
 }

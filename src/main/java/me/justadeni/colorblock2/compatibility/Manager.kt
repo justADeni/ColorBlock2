@@ -7,14 +7,14 @@ import me.justadeni.colorblock2.ColorBlock2
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
-class CompatibilityManager(private val plugin : ColorBlock2) {
+class Manager(private val plugin : ColorBlock2) {
 
     private var worldguard = false
     private var lands = false
 
     suspend fun init(){
         if (ColorBlock2.confik.worldguardhook) {
-            if (plugin.server.pluginManager.getPlugin("WorldGuard") != null) {
+            if (plugin.server.pluginManager.getPlugin("WorldGuard") != null && WorldGuard.flag()) {
                 worldguard = true
                 ColorBlock2.msg.printSuccess("WorldGuard hook loaded successfully")
             } else {
@@ -22,7 +22,7 @@ class CompatibilityManager(private val plugin : ColorBlock2) {
             }
         }
         if (ColorBlock2.confik.landshook) {
-            if (plugin.server.pluginManager.getPlugin("Lands") != null) {
+            if (plugin.server.pluginManager.getPlugin("Lands") != null && Lands.flag(plugin)) {
                 lands = true
                 ColorBlock2.msg.printSuccess("Lands hook loaded successfully")
             } else {
@@ -37,11 +37,11 @@ class CompatibilityManager(private val plugin : ColorBlock2) {
             async(Dispatchers.IO) {
 
                 if (worldguard)
-                    if (!WorldGuard.canDye(player, block))
+                    if (!WorldGuard(player, block, plugin).can())
                         return@async false
 
                 if (lands)
-                    if (!Lands.canDye(player, block, plugin))
+                    if (!Lands(player, block, plugin).can())
                         return@async false
 
                 return@async true

@@ -147,7 +147,7 @@
         <dependency>
             <groupId>com.github.justADeni</groupId>
             <artifactId>HexColorLib</artifactId>
-            <version>1.1</version>
+            <version>1.4</version>
         </dependency>
         <dependency>
             <groupId>com.sk89q.worldguard</groupId>

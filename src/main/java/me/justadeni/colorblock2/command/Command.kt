@@ -41,7 +41,7 @@ object Command : SuspendingCommandExecutor{
                     sender.sendMessage(pluginprefix + ColorBlock2.confik.configreloaded.color())
                     ColorBlock2.confik.reload()
                     ColorBlock2.confik.assign()
-                    ColorBlock2.compatibilityManager.init()
+                    ColorBlock2.manager.init()
                     return@async true
                 }
                 sender.sendMessage(pluginprefix + ColorBlock2.confik.wrongargserror.color())
