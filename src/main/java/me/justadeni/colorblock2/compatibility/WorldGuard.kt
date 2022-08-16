@@ -13,7 +13,7 @@ import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
 
-class WorldGuard(player: Player, block: Block, plugin: ColorBlock2) : General(player, block, plugin) {
+class WorldGuard(val player: Player, val block: Block, val plugin: ColorBlock2) {
     companion object {
         private var BLOCK_COLOR: StateFlag? = null
 
@@ -42,7 +42,7 @@ class WorldGuard(player: Player, block: Block, plugin: ColorBlock2) : General(pl
         }
     }
 
-    override fun can(): Boolean {
+    fun can(): Boolean {
         if (player.hasPermission(ColorBlock2.confik.adminpermission))
             return true
 

@@ -8,19 +8,11 @@ class Msg(private val plugin : ColorBlock2) {
 
     fun printError(msg: String) {
         val console = plugin.server.consoleSender
-
-        val color1 = "#AB4C37"
-        val color2 = "#FF0101"
-
-        console.sendMessage(ColorBlock2.confik.pluginprefix.color() +(color1 + msg + color2).color())
+        console.sendMessage(ColorBlock2.confik.pluginprefix.color() +("#AB4C37$msg#FF0101").color())
     }
 
     fun printSuccess(msg: String) {
         val console = plugin.server.consoleSender
-
-        val color1 = "#3A9C20"
-        val color2 = "#31E900"
-
-        console.sendMessage(ColorBlock2.confik.pluginprefix.color() + (color1 + msg + color2).color())
+        console.sendMessage(ColorBlock2.confik.pluginprefix.color() + ("#3A9C20$msg#31E900").color())
     }
 }

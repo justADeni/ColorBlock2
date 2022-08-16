@@ -8,9 +8,16 @@
 WorldGuardHook: false
 LandsHook: false
 
+#Message to the player trying to (un)dye something where they have or don't have rights/flags. Set to "NONE" to disable
+WorldGuardDisallowMessage: "NONE"
+WorldGuardAllowMessage: "NONE"
+LandsDisallowMessage: "NONE"
+LandsAllowMessage: "NONE"
+
 #Drop option indicates whether old dye of block drops when coloring block
 DropOnCreative: false
 DropOnSurvival: true
+
 #Use option indicates whether new dye gets consumed when coloring block
 #Recommended to set both things to same values to avoid creating infinite dye exploit
 UseOnCreative: false

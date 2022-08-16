@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2.compatibility
 
+import com.github.justadeni.HexColorLib.color
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -36,13 +37,33 @@ class Manager(private val plugin : ColorBlock2) {
         val permission = coroutineScope {
             async(Dispatchers.IO) {
 
+                val pluginprefix = ColorBlock2.confik.pluginprefix.color()
+
                 if (worldguard)
-                    if (!WorldGuard(player, block, plugin).can())
+                    if (WorldGuard(player, block, plugin).can()) {
+                        val msg = ColorBlock2.confik.worldguardallowmessage
+                        if (!msg.equals("NONE", true))
+                            player.sendMessage(pluginprefix + msg.color())
+
                         return@async false
+                    } else {
+                        val msg = ColorBlock2.confik.worldguarddisallowmessage
+                        if (!msg.equals("NONE", true))
+                            player.sendMessage(pluginprefix + msg.color())
+                    }
 
                 if (lands)
-                    if (!Lands(player, block, plugin).can())
+                    if (Lands(player, block, plugin).can()) {
+                        val msg = ColorBlock2.confik.landsallowmessage
+                        if (!msg.equals("NONE", true))
+                            player.sendMessage(pluginprefix + msg.color())
+
                         return@async false
+                    } else {
+                        val msg = ColorBlock2.confik.landsdisallowmessage
+                        if (!msg.equals("NONE", true))
+                            player.sendMessage(pluginprefix + msg.color())
+                    }
 
                 return@async true
             }

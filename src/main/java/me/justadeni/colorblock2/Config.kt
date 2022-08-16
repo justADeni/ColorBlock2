@@ -3,13 +3,20 @@ package me.justadeni.colorblock2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import me.justadeni.colorblock2.misc.Msg
 import org.bukkit.Particle
 import org.bukkit.Sound
+import java.lang.NullPointerException
+import java.util.*
 
 class Config(private val plugin : ColorBlock2) {
 
     var worldguardhook : Boolean = false
+    lateinit var worldguarddisallowmessage : String
+    lateinit var worldguardallowmessage : String
     var landshook : Boolean = false
+    lateinit var landsdisallowmessage : String
+    lateinit var landsallowmessage : String
 
     var droponcreative : Boolean = false
     var droponsurvival : Boolean = true
@@ -46,7 +53,11 @@ class Config(private val plugin : ColorBlock2) {
         coroutineScope {
             async(Dispatchers.IO) {
                 worldguardhook = getBool("WorldGuardHook")
+                worldguarddisallowmessage = getString("WorldGuardDisallowMessage")
+                worldguardallowmessage = getString("WorldGuardAllowMessage")
                 landshook = getBool("LandsHook")
+                landsdisallowmessage = getString("LandsDisallowMessage")
+                landsallowmessage = getString("LandsAllowMessage")
 
                 droponcreative = getBool("DropOnCreative")
                 droponsurvival = getBool("DropOnSurvival")
@@ -62,68 +73,80 @@ class Config(private val plugin : ColorBlock2) {
                 wrongargserror = getString("WrongArgsError")
                 pluginprefix = getString("PluginPrefix")
 
-                colorsound = getString("ColorSound")
-                if (!existsSound(colorsound)){
-                    ColorBlock2.msg.printError("ColorSound value $colorsound is not a valid sound. Using NONE.")
-                    colorsound = "NONE"
-                }
+                colorsound = getString("ColorSound").checkSound()
                 colorvolume = getDouble("ColorVolume")
 
-                uncolorsound = getString("UncolorSound")
-                if (!existsSound(uncolorsound)){
-                    ColorBlock2.msg.printError("UncolorSound value $uncolorsound is not a valid sound. Using NONE.")
-                    uncolorsound = "NONE"
-                }
+                uncolorsound = getString("UncolorSound").checkSound()
                 uncolorvolume = getDouble("UncolorVolume")
 
-                colorparticle = getString("ColorParticle")
-                if (!existsParticle(colorparticle)){
-                    ColorBlock2.msg.printError("ColorParticle value $colorparticle is not a valid particle. Using NONE.")
-                    colorparticle = "NONE"
-                }
-                uncolorparticle = getString("UncolorParticle")
-                if (!existsParticle(uncolorparticle)){
-                    ColorBlock2.msg.printError("UncolorParticle value $uncolorparticle is not a valid particle. Using NONE.")
-                    uncolorparticle = "NONE"
-                }
+                colorparticle = getString("ColorParticle").checkParticle()
+                uncolorparticle = getString("UncolorParticle").checkParticle()
+
                 particlechance = getInt("ParticleChance")
             }
         }
     }
     private suspend fun getBool(query : String) : Boolean {
-        return plugin.config.getBoolean(query)
-    }
-    private suspend fun getDouble(query: String) : Double {
-        return plugin.config.getDouble(query)
-    }
-    private suspend fun getInt(query: String) : Int {
-        return plugin.config.getInt(query)
-    }
-    private suspend fun getString(query: String) : String {
-        return plugin.config.getString(query)!!
-    }
-
-    private suspend fun existsSound(query: String) : Boolean {
-        if (query.equals("NONE", ignoreCase = true))
-            return true
-
         return try {
-            Sound.valueOf(query)
-            true
-        } catch (e : EnumConstantNotPresentException){
+            plugin.config.getBoolean(query)
+        } catch (e : NullPointerException){
+            ColorBlock2.msg.printError(query.replaceFirstChar { query[0].uppercase() } + "value not found. Using false.")
+            plugin.config.set(query, false)
             false
         }
     }
-
-    private suspend fun existsParticle(query: String) : Boolean {
-        if (query.equals("NONE", ignoreCase = true))
-            return true
+    private suspend fun getDouble(query: String) : Double {
+        return try {
+            plugin.config.getDouble(query)
+        } catch (e : NullPointerException){
+            ColorBlock2.msg.printError(query.replaceFirstChar { query[0].uppercase() } + "value not found. Using 5.0.")
+            plugin.config.set(query, 5.0)
+            5.0
+        }
+    }
+    private suspend fun getInt(query: String) : Int {
 
         return try {
-            Particle.valueOf(query)
-            true
+            plugin.config.getInt(query)
+        } catch (e : NullPointerException){
+            ColorBlock2.msg.printError(query.replaceFirstChar { query[0].uppercase() } + "value not found. Using 5.")
+            plugin.config.set(query, 5)
+            5
+        }
+    }
+    private suspend fun getString(query: String) : String {
+        return try {
+            plugin.config.getString(query)!!
+        } catch (e : NullPointerException){
+            ColorBlock2.msg.printError(query.replaceFirstChar { query[0].uppercase() } + "value not found. Using NONE.")
+            plugin.config.set(query, "NONE")
+            "NONE"
+        }
+    }
+
+    private suspend fun String.checkSound() : String {
+        if (this.equals("NONE", ignoreCase = true))
+            return this
+
+        return try {
+            Sound.valueOf(this)
+            this
         } catch (e : EnumConstantNotPresentException){
-            false
+            ColorBlock2.msg.printError("UncolorSound value $this is not a valid sound. Using NONE.")
+            "NONE"
+        }
+    }
+
+    private suspend fun String.checkParticle() : String {
+        if (this.equals("NONE", ignoreCase = true))
+            return this
+
+        return try {
+            Particle.valueOf(this)
+            this
+        } catch (e : EnumConstantNotPresentException){
+            ColorBlock2.msg.printError("ColorParticle value $this is not a valid particle. Using NONE.")
+            "NONE"
         }
     }
 }

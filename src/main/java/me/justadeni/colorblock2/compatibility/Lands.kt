@@ -17,7 +17,7 @@ import me.justadeni.colorblock2.ColorBlock2
 import org.bukkit.block.Block
 import org.bukkit.entity.Player
 
-class Lands(player: Player, block: Block, plugin: ColorBlock2) : General(player, block, plugin) {
+class Lands(val player: Player, val block: Block, val plugin: ColorBlock2){
 
     companion object{
         private var BLOCK_COLOR : RoleFlag? = null
@@ -46,7 +46,7 @@ class Lands(player: Player, block: Block, plugin: ColorBlock2) : General(player,
         }
     }
 
-    override fun can() : Boolean{
+    fun can() : Boolean{
         if (player.hasPermission(ColorBlock2.confik.adminpermission))
             return true
 
