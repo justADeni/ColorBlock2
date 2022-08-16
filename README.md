@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/7138e8d6a281409cbfdb2eff876450a5)](https://www.codacy.com/gh/justADeni/ColorBlock2/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=justADeni/ColorBlock2&amp;utm_campaign=Badge_Grade)
 # ColorBlock2
 Dye blocks by clicking them with a dye!
 
