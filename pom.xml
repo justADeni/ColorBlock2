@@ -6,7 +6,7 @@
 
     <groupId>me.justadeni</groupId>
     <artifactId>colorblock2</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
 
     <name>ColorBlock2</name>
