@@ -13,7 +13,7 @@ class Manager(private val plugin : ColorBlock2) {
     private var worldguard = false
     private var lands = false
 
-    suspend fun init(){
+    fun init(){
         if (ColorBlock2.confik.worldguardhook) {
             if (plugin.server.pluginManager.getPlugin("WorldGuard") != null && WorldGuard.flag()) {
                 worldguard = true
@@ -39,33 +39,17 @@ class Manager(private val plugin : ColorBlock2) {
 
                 val pluginprefix = ColorBlock2.confik.pluginprefix.color()
 
-                if (worldguard)
-                    if (WorldGuard(player, block, plugin).can()) {
-                        val msg = ColorBlock2.confik.worldguardallowmessage
-                        if (!msg.equals("NONE", true))
-                            player.sendMessage(pluginprefix + msg.color())
+                val canworldguard = if (worldguard)
+                    WorldGuard(player, block, plugin).can()
+                else
+                    true
 
-                        return@async false
-                    } else {
-                        val msg = ColorBlock2.confik.worldguarddisallowmessage
-                        if (!msg.equals("NONE", true))
-                            player.sendMessage(pluginprefix + msg.color())
-                    }
+                val canlands = if (lands)
+                    Lands(player, block, plugin).can()
+                else
+                    true
 
-                if (lands)
-                    if (Lands(player, block, plugin).can()) {
-                        val msg = ColorBlock2.confik.landsallowmessage
-                        if (!msg.equals("NONE", true))
-                            player.sendMessage(pluginprefix + msg.color())
-
-                        return@async false
-                    } else {
-                        val msg = ColorBlock2.confik.landsdisallowmessage
-                        if (!msg.equals("NONE", true))
-                            player.sendMessage(pluginprefix + msg.color())
-                    }
-
-                return@async true
+                return@async canworldguard && canlands
             }
         }
 

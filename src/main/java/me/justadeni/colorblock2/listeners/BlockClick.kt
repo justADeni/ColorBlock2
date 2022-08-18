@@ -31,9 +31,6 @@ class BlockClick : Listener {
 
         val player = e.player
 
-        if (!ColorBlock2.manager.canDye(player, block))
-            return
-
         val hand = if (e.hand == EquipmentSlot.HAND) {
             player.inventory.itemInMainHand
         } else {
@@ -58,6 +55,9 @@ class BlockClick : Listener {
             if (e.hand == EquipmentSlot.OFF_HAND)
                 if (player.inventory.itemInMainHand.type.isAir)
                     return
+
+            if (!ColorBlock2.manager.canDye(player, block))
+                return
 
             e.isCancelled = true
 
@@ -86,6 +86,9 @@ class BlockClick : Listener {
             if (e.hand == EquipmentSlot.OFF_HAND)
                 if (player.inventory.itemInMainHand.type.name.contains("DYE"))
                     return
+
+            if (!ColorBlock2.manager.canDye(player, block))
+                return
 
             e.isCancelled = true
 

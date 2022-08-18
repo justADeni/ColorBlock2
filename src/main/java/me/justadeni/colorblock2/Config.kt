@@ -3,11 +3,9 @@ package me.justadeni.colorblock2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
-import me.justadeni.colorblock2.misc.Msg
 import org.bukkit.Particle
 import org.bukkit.Sound
 import java.lang.NullPointerException
-import java.util.*
 
 class Config(private val plugin : ColorBlock2) {
 
@@ -49,13 +47,18 @@ class Config(private val plugin : ColorBlock2) {
     suspend fun reload(){
         plugin.reloadConfig()
     }
-    suspend fun assign(){
+    fun loadassign(){
+        worldguardhook = getBool("WorldGuardHook")
+        landshook = getBool("LandsHook")
+
+        pluginprefix = getString("PluginPrefix")
+    }
+    suspend fun enableassign(){
         coroutineScope {
             async(Dispatchers.IO) {
-                worldguardhook = getBool("WorldGuardHook")
                 worldguarddisallowmessage = getString("WorldGuardDisallowMessage")
                 worldguardallowmessage = getString("WorldGuardAllowMessage")
-                landshook = getBool("LandsHook")
+
                 landsdisallowmessage = getString("LandsDisallowMessage")
                 landsallowmessage = getString("LandsAllowMessage")
 
@@ -71,7 +74,6 @@ class Config(private val plugin : ColorBlock2) {
                 configreloaded = getString("ConfigReloaded")
                 permissionerror = getString("PermissionError")
                 wrongargserror = getString("WrongArgsError")
-                pluginprefix = getString("PluginPrefix")
 
                 colorsound = getString("ColorSound").checkSound()
                 colorvolume = getDouble("ColorVolume")
@@ -86,7 +88,7 @@ class Config(private val plugin : ColorBlock2) {
             }
         }
     }
-    private suspend fun getBool(query : String) : Boolean {
+    private /*suspend*/ fun getBool(query : String) : Boolean {
         return try {
             plugin.config.getBoolean(query)
         } catch (e : NullPointerException){
@@ -95,7 +97,7 @@ class Config(private val plugin : ColorBlock2) {
             false
         }
     }
-    private suspend fun getDouble(query: String) : Double {
+    private /*suspend*/ fun getDouble(query: String) : Double {
         return try {
             plugin.config.getDouble(query)
         } catch (e : NullPointerException){
@@ -104,7 +106,7 @@ class Config(private val plugin : ColorBlock2) {
             5.0
         }
     }
-    private suspend fun getInt(query: String) : Int {
+    private /*suspend*/ fun getInt(query: String) : Int {
 
         return try {
             plugin.config.getInt(query)
@@ -114,7 +116,7 @@ class Config(private val plugin : ColorBlock2) {
             5
         }
     }
-    private suspend fun getString(query: String) : String {
+    private /*suspend*/ fun getString(query: String) : String {
         return try {
             plugin.config.getString(query)!!
         } catch (e : NullPointerException){
@@ -124,7 +126,7 @@ class Config(private val plugin : ColorBlock2) {
         }
     }
 
-    private suspend fun String.checkSound() : String {
+    private /*suspend*/ fun String.checkSound() : String {
         if (this.equals("NONE", ignoreCase = true))
             return this
 
@@ -137,7 +139,7 @@ class Config(private val plugin : ColorBlock2) {
         }
     }
 
-    private suspend fun String.checkParticle() : String {
+    private /*suspend*/ fun String.checkParticle() : String {
         if (this.equals("NONE", ignoreCase = true))
             return this
 

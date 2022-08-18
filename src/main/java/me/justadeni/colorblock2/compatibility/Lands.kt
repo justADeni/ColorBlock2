@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2.compatibility
 
+import com.github.justadeni.HexColorLib.color
 import com.sk89q.worldguard.protection.flags.StateFlag
 import me.angeschossen.lands.api.exceptions.FlagConflictException
 import me.angeschossen.lands.api.flags.Flag
@@ -51,11 +52,20 @@ class Lands(val player: Player, val block: Block, val plugin: ColorBlock2){
             return true
 
         val landsIntegration = LandsIntegration(plugin)
-        val area: Area = landsIntegration.getAreaByLoc(block.location) ?: return true
 
-        if (area.hasFlag(player.uniqueId, BLOCK_COLOR!!))
-            return true
+        return run {
+            val area: Area = landsIntegration.getAreaByLoc(block.location) ?: return@run true
 
-        return false
+            if (area.hasFlag(player.uniqueId, BLOCK_COLOR!!)){
+                if (!ColorBlock2.confik.landsallowmessage.equals("NONE", true))
+                    player.sendMessage(ColorBlock2.confik.pluginprefix + ColorBlock2.confik.landsallowmessage.color())
+                else if (!ColorBlock2.confik.landsdisallowmessage.equals("NONE", true))
+                    player.sendMessage(ColorBlock2.confik.pluginprefix + ColorBlock2.confik.landsdisallowmessage.color())
+
+                return@run true
+            }
+
+            return@run false
+        }
     }
 }

@@ -18,15 +18,19 @@ class ColorBlock2 : SuspendingJavaPlugin() {
         lateinit var manager: Manager
     }
 
-    override suspend fun onEnableAsync() {
+    override fun onLoad() {
+        saveDefaultConfig()
         confik = Config(this)
+        confik.loadassign()
         msg = Msg(this)
         manager = Manager(this)
-        saveDefaultConfig()
         manager.init()
+    }
+
+    override suspend fun onEnableAsync() {
+        confik.enableassign()
         server.pluginManager.registerSuspendingEvents(BlockClick(), this)
         getCommand("colorblock")?.setSuspendingExecutor(Command)
         getCommand("colorblock")?.setSuspendingTabCompleter(TabComplete)
-        confik.assign()
     }
 }

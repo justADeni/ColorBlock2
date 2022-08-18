@@ -1,5 +1,6 @@
 package me.justadeni.colorblock2.compatibility
 
+import com.github.justadeni.HexColorLib.color
 import com.sk89q.worldedit.bukkit.BukkitAdapter
 import com.sk89q.worldguard.WorldGuard
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin
@@ -24,7 +25,7 @@ class WorldGuard(val player: Player, val block: Block, val plugin: ColorBlock2) 
             val registry: FlagRegistry = WorldGuard.getInstance().flagRegistry
 
             return try {
-                val flag = StateFlag("block-color", true)
+                val flag = StateFlag("block-color", false)
                 registry.register(flag)
                 BLOCK_COLOR = flag
                 true
@@ -48,7 +49,20 @@ class WorldGuard(val player: Player, val block: Block, val plugin: ColorBlock2) 
 
         val localPlayer = WorldGuardPlugin.inst().wrapPlayer(player)
         val query = WorldGuard.getInstance().platform.regionContainer.createQuery()
-        return query.testState(BukkitAdapter.adapt(block.location), localPlayer, BLOCK_COLOR)
+
+        val can = query.testState(BukkitAdapter.adapt(block.location), localPlayer, BLOCK_COLOR)
+
+        if (query.getApplicableRegions(BukkitAdapter.adapt(block.location)).regions.isNotEmpty()) {
+            if (can) {
+                if (!ColorBlock2.confik.worldguardallowmessage.equals("NONE", true))
+                    player.sendMessage(ColorBlock2.confik.pluginprefix + ColorBlock2.confik.worldguardallowmessage.color())
+                else if (!ColorBlock2.confik.worldguarddisallowmessage.equals("NONE", true))
+                    player.sendMessage(ColorBlock2.confik.pluginprefix + ColorBlock2.confik.worldguarddisallowmessage.color())
+            }
+        }
+
+
+        return can
     }
 
 }
