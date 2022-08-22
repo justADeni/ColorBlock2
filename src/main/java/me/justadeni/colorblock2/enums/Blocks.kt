@@ -21,7 +21,7 @@ enum class Blocks {
     companion object {
         suspend fun names() : ArrayList<String>{
 
-            var list = arrayListOf<String>()
+            val list = arrayListOf<String>()
             for (name in Blocks.values())
                 list.add(name.name)
             return list

@@ -56,7 +56,7 @@ abstract class Colorable {
         Particle.Particle(ColorBlock2.confik.uncolorparticle, block)
     }
 
-    suspend fun dropdye(block: Block, dye: String){
+    fun dropdye(block: Block, dye: String){
         val newDye = dye + "_DYE"
         val newDyeMat = getMaterial(newDye)!!
         val loc = block.location

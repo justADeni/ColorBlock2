@@ -1,6 +1,5 @@
 package me.justadeni.colorblock2.colorables
 
-import kotlinx.coroutines.coroutineScope
 import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.enums.Dyes
 import me.justadeni.colorblock2.misc.Particle
@@ -42,7 +41,7 @@ class Candle : Colorable() {
         val newCandle: Candle =
             newBlockMat.createBlockData { blockData: BlockData ->
                 (blockData as Candle).candles = candle.candles
-                (blockData as Candle).isLit = candle.isLit
+                blockData.isLit = candle.isLit
             } as Candle
         block.blockData = newCandle
 
@@ -70,7 +69,7 @@ class Candle : Colorable() {
         val newCandle: Candle =
             newBlockMat.createBlockData { blockData: BlockData ->
                 (blockData as Candle).candles = candle.candles
-                (blockData as Candle).isLit = candle.isLit
+                blockData.isLit = candle.isLit
             } as Candle
         block.blockData = newCandle
 

@@ -1,23 +1,15 @@
 package me.justadeni.colorblock2.colorables
 
-import com.github.shynixn.mccoroutine.bukkit.ticks
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import me.justadeni.colorblock2.ColorBlock2
 import me.justadeni.colorblock2.enums.Dyes
 import me.justadeni.colorblock2.misc.Particle
 import me.justadeni.colorblock2.misc.Sound
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.block.BlockFace
-import org.bukkit.block.data.BlockData
 import org.bukkit.block.data.type.Bed
 import org.bukkit.entity.Player
-import java.util.UUID
 
 
 class Bed : Colorable() {
@@ -72,7 +64,7 @@ class Bed : Colorable() {
     }
 
 
-    private suspend fun getHeadBlock(block : Block) : Block{
+    private fun getHeadBlock(block : Block) : Block{
         val bedData = block.blockData as Bed
         if (bedData.part == Bed.Part.HEAD)
             return block
@@ -92,7 +84,7 @@ class Bed : Colorable() {
         return loc.block
     }
 
-    private suspend fun setBed(startBlock: Block, facing: BlockFace, material: Material?){
+    private fun setBed(startBlock: Block, facing: BlockFace, material: Material?){
 
         startBlock.setBlockData(material!!.createBlockData { data ->
             (data as Bed).part = Bed.Part.HEAD

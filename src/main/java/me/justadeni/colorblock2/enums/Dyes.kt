@@ -25,7 +25,7 @@ enum class Dyes {
 
     companion object {
         suspend fun names() : ArrayList<String>{
-            var list = arrayListOf<String>()
+            val list = arrayListOf<String>()
             for (name in Dyes.values())
                 list.add(name.name)
             return list

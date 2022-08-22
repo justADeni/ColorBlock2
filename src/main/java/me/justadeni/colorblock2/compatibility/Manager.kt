@@ -1,6 +1,5 @@
 package me.justadeni.colorblock2.compatibility
 
-import com.github.justadeni.HexColorLib.color
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
