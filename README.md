@@ -8,7 +8,7 @@ ColorBlock2 aims to do the same thing, but more elegantly, with proper OOP and i
 ### If you encounter any issue or want to submit a feature request, feel free to message me on Discord or open bug report/pull request
 
 ![](https://github.com/justADeni/ColorBlock2/blob/master/img/1.png?raw=true)
-![https://www.spigotmc.org/resources/kotlin-stdlib.80808/](https://github.com/justADeni/ColorBlock2/blob/master/img/ColorBlock-Dependencies.png?raw=true)
+<a href="https://www.spigotmc.org/resources/kotlin-stdlib.80808" title="video text"><img src="https://github.com/justADeni/ColorBlock2/blob/master/img/ColorBlock-Dependencies.png?raw=true" width="xxx" height="yyy"></a>
 ![](https://github.com/justADeni/ColorBlock2/blob/master/img/2.png?raw=true)
 ![](https://github.com/justADeni/ColorBlock2/blob/master/img/3.png?raw=true)
 ![](https://github.com/justADeni/ColorBlock2/blob/master/img/4.png?raw=true)
