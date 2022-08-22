@@ -27,8 +27,6 @@ class Bed : Colorable() {
         val dyeSimple = dye.replace("_DYE", "") //for example "LIGHT_GRAY"
         val blockName = block.type.name //uppercase of full block name
 
-        val bed = block.blockData as Bed
-
         val oldDye = Dyes.match(blockName) //dye a block used to have
 
         if (oldDye == dyeSimple)
@@ -51,7 +49,6 @@ class Bed : Colorable() {
     }
 
     override suspend fun unpaint(block: Block, dropdye : Boolean, player : Player){
-        val bed = block.blockData as Bed
 
         val blockName = block.type.name
 
@@ -83,37 +80,30 @@ class Bed : Colorable() {
         var x = 0
         var z = 0
 
-        if (bedData.facing == BlockFace.EAST)
-            x += 1
-        else if (bedData.facing == BlockFace.WEST)
-            x -= 1
-        else if (bedData.facing == BlockFace.SOUTH)
-            z += 1
-        else if (bedData.facing == BlockFace.NORTH)
-            z -= 1
+        when(bedData.facing){
+            BlockFace.EAST -> x += 1
+            BlockFace.WEST -> x -= 1
+            BlockFace.SOUTH -> z += 1
+            BlockFace.NORTH -> z -= 1
+            else -> {}
+        }
 
         val loc = Location(block.world, (block.x+x).toDouble(), block.y.toDouble(), (block.z+z).toDouble())
         return loc.block
-
-        //return block.getRelative(bedData.facing.oppositeFace)
     }
 
     private suspend fun setBed(startBlock: Block, facing: BlockFace, material: Material?){
 
         startBlock.setBlockData(material!!.createBlockData { data ->
-            (data as Bed).setPart(
-                Bed.Part.HEAD
-            )
-            (data as Bed).facing = facing
+            (data as Bed).part = Bed.Part.HEAD
+            data.facing = facing
         }, false)
 
         val footBlock = startBlock.getRelative(facing.oppositeFace)
 
-        footBlock.setBlockData(material!!.createBlockData { data ->
-            (data as Bed).setPart(
-                Bed.Part.FOOT
-            )
-            (data as Bed).facing = facing
+        footBlock.setBlockData(material.createBlockData { data ->
+            (data as Bed).part = Bed.Part.FOOT
+            data.facing = facing
         }, false)
     }
 }

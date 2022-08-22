@@ -8,6 +8,7 @@ import me.justadeni.colorblock2.command.Command
 import me.justadeni.colorblock2.command.TabComplete
 import me.justadeni.colorblock2.compatibility.Manager
 import me.justadeni.colorblock2.listeners.BlockClick
+import me.justadeni.colorblock2.misc.Metrics
 import me.justadeni.colorblock2.misc.Msg
 
 class ColorBlock2 : SuspendingJavaPlugin() {
@@ -32,5 +33,6 @@ class ColorBlock2 : SuspendingJavaPlugin() {
         server.pluginManager.registerSuspendingEvents(BlockClick(), this)
         getCommand("colorblock")?.setSuspendingExecutor(Command)
         getCommand("colorblock")?.setSuspendingTabCompleter(TabComplete)
+        val metrics = Metrics(this, 16230)
     }
 }

@@ -37,8 +37,6 @@ class Manager(private val plugin : ColorBlock2) {
         val permission = coroutineScope {
             async(Dispatchers.IO) {
 
-                val pluginprefix = ColorBlock2.confik.pluginprefix.color()
-
                 val canworldguard = if (worldguard)
                     WorldGuard(player, block, plugin).can()
                 else
